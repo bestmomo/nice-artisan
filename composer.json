@@ -1,6 +1,6 @@
 {
   "name": "bestmomo/nice-artisan",
-  "description": "Web interface pour Artisan",
+  "description": "Web interface for Laravel Artisan",
   "homepage": "http://github.com/bestmomo/nice-artisan",
   "license": "MIT",
   "authors": [
