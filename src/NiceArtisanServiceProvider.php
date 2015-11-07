@@ -1,0 +1,45 @@
+<?php
+
+namespace Bestmomo\NiceArtisan;
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
+
+class NiceArtisanServiceProvider extends ServiceProvider
+{
+
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // Get namespace
+        $nameSpace = $this->app->getNamespace();
+
+        // Set namespace alias for NiceArtisanController
+        AliasLoader::getInstance()->alias('AppController', $nameSpace . 'Http\Controllers\Controller');
+
+        // Set namespace alias for Kernel
+        AliasLoader::getInstance()->alias('AppKernel', $nameSpace . 'Http\Kernel');
+
+        // Routes
+        $this->app->router->group(['namespace' => $nameSpace . 'Http\Controllers'], function()
+        {
+            require __DIR__.'/Http/routes.php';
+        });
+
+        // Views
+        $this->loadViewsFrom(__DIR__.'/../views', 'NiceArtisan');
+
+    }
+
+    /**
+     * Register bindings in the container.
+     *
+     * @return void
+     */
+    public function register(){}
+
+}

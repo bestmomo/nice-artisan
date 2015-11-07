@@ -1,0 +1,22 @@
+{
+  "name": "bestmomo/filemanager",
+  "description": "Web interface pour Artisan",
+  "homepage": "http://github.com/bestmomo/nice-artisan",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Bestmomo",
+      "email": "grandheretique@free.fr",
+      "homepage":"http://laravel.sillo.org"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "illuminate/support": "~5.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Bestmomo\\NiceArtisan\\": "src/"
+    }
+  }
+}
