@@ -77,43 +77,54 @@
 
     <div class="container">
 
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-              <ul class="nav navbar-nav">
-                <li {!! request()->is('niceartisan') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan') !!}">Make</a></li>
-                <li {!! request()->is('niceartisan/migrate') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/migrate') !!}">Migrate</a></li>
-                <li {!! request()->is('niceartisan/route') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/route') !!}">Route</a></li>
-                <li {!! request()->is('niceartisan/queue') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/queue') !!}">Queue</a></li>
-                <li {!! request()->is('niceartisan/handler') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/handler') !!}">Handler</a></li>
-                <li {!! request()->is('niceartisan/config') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/config') !!}">Config</a></li>
-                <li {!! request()->is('niceartisan/cache') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/cache') !!}">Cache</a></li>
-                <li {!! request()->is('niceartisan/miscellaneous') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/miscellaneous') !!}">Miscellaneous</a></li>
-              </ul>
-          </div>
-        </nav>
+      <h1 class="text-center">Nice Artisan</h1>
 
-        @if (count($errors) > 0)
-          <div class="alert alert-danger">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-              @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-              @endforeach
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+              <li {!! request()->is('niceartisan') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan') !!}">Make</a></li>
+              <li {!! request()->is('niceartisan/migrate') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/migrate') !!}">Migrate</a></li>
+              <li {!! request()->is('niceartisan/route') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/route') !!}">Route</a></li>
+              <li {!! request()->is('niceartisan/queue') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/queue') !!}">Queue</a></li>
+              <li {!! request()->is('niceartisan/handler') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/handler') !!}">Handler</a></li>
+              <li {!! request()->is('niceartisan/config') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/config') !!}">Config</a></li>
+              <li {!! request()->is('niceartisan/cache') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/cache') !!}">Cache</a></li>
+              <li {!! request()->is('niceartisan/miscellaneous') ? 'class="active"' : '' !!}><a href="{!! url('niceartisan/miscellaneous') !!}">Miscellaneous</a></li>
             </ul>
-          </div>
-        @endif
+        </div>
+      </nav>
 
-        @if (session('output'))
-          <div class="alert alert-success">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success!</strong>
-            <br><br>
-            <pre>{!! session('output') !!}</pre>
-          </div>
-        @endif
+      @if (count($errors) > 0)
+        <div class="alert alert-danger">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Whoops!</strong> There were some problems with your input.<br><br>
+          <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
 
-        @yield('content')
+      @if (session('output'))
+        <div class="alert alert-success">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Success !</strong>
+          <br><br>
+          <pre>{!! session('output') !!}</pre>
+        </div>
+      @endif
+
+      @if (session('error'))
+        <div class="alert alert-danger">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Error !</strong>
+          <br><br>
+          <pre>{!! session('error') !!}</pre>
+        </div>
+      @endif
+
+      @yield('content')
 
     </div>
 

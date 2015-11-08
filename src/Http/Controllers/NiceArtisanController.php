@@ -318,12 +318,12 @@ class NiceArtisanController extends AppController
 	}
 
 	/**
-	 * Call the Artisan make command
+	 * Call the Artisan  command
 	 *
 	 * @param  Request  $request
 	 * @param  string $class
 	 */
-	public function make(Request $request, $command)
+	public function command(Request $request, $command)
 	{
 		if(array_key_exists('argument_name', $request->all())) {
 			$this->validate($request, ['argument_name' => 'required']);
@@ -333,7 +333,7 @@ class NiceArtisanController extends AppController
 			$this->validate($request, ['argument_id' => 'required']);
 		}
 
-		$inputs = $request->except('_token');
+		$inputs = $request->except('_token', 'command');
 
 		$params = [];
 		foreach ($inputs as $key => $value) {
@@ -343,8 +343,12 @@ class NiceArtisanController extends AppController
 		 	}
 		}
 		
-		Artisan::call($command, $params);
-
+		try {
+			Artisan::call($command, $params);
+		} catch (\Exception $e) {
+			return redirect()->back()->with('error', $e->getMessage());
+		}
+		
 		return redirect()->back()->with('output', Artisan::output());
 	}
 }

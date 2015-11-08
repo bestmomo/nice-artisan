@@ -3,7 +3,7 @@
 Route::group(['prefix' => 'niceartisan'], function () {
 
 	get('/', '\Bestmomo\NiceArtisan\Http\Controllers\NiceArtisanController@showMake');
-	post('item/{class}', '\Bestmomo\NiceArtisan\Http\Controllers\NiceArtisanController@make');
+	post('item/{class}', '\Bestmomo\NiceArtisan\Http\Controllers\NiceArtisanController@command');
 
 	get('migrate', '\Bestmomo\NiceArtisan\Http\Controllers\NiceArtisanController@showMigrate');
 	get('route', '\Bestmomo\NiceArtisan\Http\Controllers\NiceArtisanController@showRoute');

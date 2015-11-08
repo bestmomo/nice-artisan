@@ -13,10 +13,11 @@
                     <a href="#item{{ ++$index }}" data-parent="#collapse_item" data-toggle="collapse">{{ $item->getName() . ' (' . $item->getDescription() . ')' }}</a> 
                   </h3>
                 </div>
-                <div id="item{{ $index }}" class="panel-collapse collapse">
+                <div id="item{{ $index }}" class="panel-collapse collapse {!! old('command') == $item->getName() ? 'in' : '' !!}">
                   <div class="panel-body"> 
                     <form method="POST" action="{!! url('niceartisan/item/' . $item->getName()) !!}">
                       {!! csrf_field() !!}
+                      <input type="hidden" name="command" value="{{ $item->getName() }}">
                       @if(count($item->getDefinition()->getArguments()) > 0)
                         <fieldset>
                             <legend>Arguments</legend>
