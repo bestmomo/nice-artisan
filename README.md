@@ -10,7 +10,7 @@ Add Nice Artisan to your composer.json file :
 ```
     "require" : {
         ...
-        "bestmomo/nice-artisan": "dev-master"
+        "bestmomo/nice-artisan": "0.1.*"
     }
 ```
 
