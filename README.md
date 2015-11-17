@@ -24,10 +24,19 @@ The next required step is to add the service provider to config/app.php :
     Bestmomo\NiceArtisan\NiceArtisanServiceProvider::class,
 ```
 
+And copy the package config to your local config with the publish command:
+```
+    php artisan vendor:publish
+```
+
+You can change options and commands in `config/commands.php`. The menu is dynamically created with this config.
+
 Now it must work with this url :
 ```
     .../niceartisan
 ```
+
+
 
 ### Middleware ###
 

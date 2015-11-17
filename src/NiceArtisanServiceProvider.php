@@ -32,7 +32,11 @@ class NiceArtisanServiceProvider extends ServiceProvider
 
         // Views
         $this->loadViewsFrom(__DIR__.'/../views', 'NiceArtisan');
-
+        
+        // Config
+        $this->publishes([
+            __DIR__ . '/../config/commands.php' => config_path('commands.php'),
+        ]);
     }
 
     /**
