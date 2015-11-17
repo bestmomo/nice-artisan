@@ -8,10 +8,7 @@ It's still a work in progress.
 
 Add Nice Artisan to your composer.json file :
 ```
-    "require" : {
-        ...
-        "bestmomo/nice-artisan": "0.2.*"
-    }
+    composer require bestmomo/nice-artisan
 ```
 
 Update Composer :
