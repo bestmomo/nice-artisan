@@ -7,7 +7,7 @@ return [
     */
     
     'make' => [
-        'make:command',
+        'make:auth',
         'make:console',
         'make:event',
         'make:job',
@@ -64,15 +64,6 @@ return [
     ],    
     
     /*
-    | handler commands
-    */
-
-    'handler' => [
-        'handler:command',
-        'handler:event',
-    ],
-    
-    /*
     | Config commands
     */
 
@@ -105,7 +96,6 @@ return [
         'serve',
         'vendor:publish',
         'view:clear',
-        'auth:clear-resets',
         'schedule:run',
         'db:seed',
         'session:table',

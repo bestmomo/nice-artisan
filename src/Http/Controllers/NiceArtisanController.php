@@ -15,6 +15,7 @@ class NiceArtisanController extends AppController {
      *
      */
     protected $coreCommands = [
+        'make:auth',
         'help',
         'list',
         'app:name',
@@ -48,7 +49,6 @@ class NiceArtisanController extends AppController {
         'view:clear',
         'cache:clear',
         'cache:table',
-        'auth:clear-resets',
         'schedule:run',
         'migrate',
         'make:migration',
@@ -139,10 +139,10 @@ class NiceArtisanController extends AppController {
         try {
             Artisan::call($command, $params);
         } catch (Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->back()->with('output', Artisan::output());
+        return back()->with('output', Artisan::output());
     }
 
 }

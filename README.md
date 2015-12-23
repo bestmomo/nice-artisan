@@ -2,6 +2,8 @@
 
 This package is to add a web interface for Laravel 5 Artisan.
 
+For Laravel 5.1 get V 0.3 !
+
 It's still a work in progress.
 
 ### Installation ###
@@ -9,11 +11,6 @@ It's still a work in progress.
 Add Nice Artisan to your composer.json file :
 ```
     composer require bestmomo/nice-artisan
-```
-
-Update Composer :
-```
-    composer update
 ```
 
 The next required step is to add the service provider to config/app.php :
