@@ -17,7 +17,7 @@
                                       <legend>Arguments</legend>
                                       @foreach($item->getDefinition()->getArguments() as $argument)
                                             <div class="input-field">
-                                                <input type="text" name="argument_{{ $argument->getName() }}" placeholder="{{ $argument->getDefault() }}">
+                                                <input type="text" name="argument_{{ $argument->getName() }}" placeholder="{{ is_array($argument->getDefault()) ? '' : $argument->getDefault() }}">
                                                 <label>{{ $argument->getName() . ' (' . $argument->getDescription() }})</label>
                                             </div>
                                       @endforeach
