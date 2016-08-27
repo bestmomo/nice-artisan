@@ -2,13 +2,20 @@
 
 This package is to add a web interface for Laravel 5 Artisan.
 
-For Laravel 5.1 get V 0.3 !
-
-It's still a work in progress.
 
 ### Installation ###
 
 Add Nice Artisan to your composer.json file :
+
+For Laravel 5.1
+```
+    composer require bestmomo/nice-artisan:0.3.*
+```
+For Laravel 5.2
+```
+    composer require bestmomo/nice-artisan:0.4.*
+```
+For Laravel 5.3
 ```
     composer require bestmomo/nice-artisan
 ```
@@ -20,7 +27,7 @@ The next required step is to add the service provider to config/app.php :
 
 And copy the package config to your local config with the publish command:
 ```
-    php artisan vendor:publish
+    php artisan vendor:publish --provider="Bestmomo\NiceArtisan\NiceArtisanServiceProvider::class"
 ```
 
 You can change options and commands in `config/commands.php`. The menu is dynamically created with this config.
@@ -30,23 +37,20 @@ Now it must work with this url :
     .../niceartisan
 ```
 
-
-
 ### Middleware ###
 
 If you want to use this package on a production application you must protect the urls with a middleware for your security !
 
 Add a route middleware to your application, for example :
 ```
-<?php 
+<?php
 
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\RedirectResponse;
 
-class NiceArtisan {
-
+class NiceArtisan
+{
     /**
      * Handle an incoming request.
      *
@@ -58,13 +62,12 @@ class NiceArtisan {
     {
         $user = $request->user();
 
-        if ($user && $user->isAdmin())
-        {
+        if ($user && $user->isAdmin()) {
             return $next($request);
         }
-        return new RedirectResponse(url('/'));
-    }
 
+        return redirect('/');
+    }
 }
 ```
 
@@ -77,6 +80,7 @@ protected $routeMiddleware = [
 ];
 
 ``` 
+
 
 ### Screenshots ###
 

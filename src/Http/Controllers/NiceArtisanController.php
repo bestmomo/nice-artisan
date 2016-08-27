@@ -8,8 +8,8 @@ use Artisan;
 use Exception;
 use Illuminate\Http\Request;
 
-class NiceArtisanController extends AppController {
-
+class NiceArtisanController extends AppController
+{
     /**
      * All core commands.
      *
@@ -72,6 +72,11 @@ class NiceArtisanController extends AppController {
         'queue:restart',
         'queue:listen',
         'queue:subscribe',
+        'auth:clear-resets',
+        'storage:link',
+        'make:mail',
+        'make:notification',
+        'notifications:table',
     ];
 
     /**
@@ -79,7 +84,8 @@ class NiceArtisanController extends AppController {
      *
      * @return void
      */
-    public function __construct(Kernel $kernel) {
+    public function __construct(Kernel $kernel)
+    {
         if ($kernel->hasRouteMiddleware('nice_artisan')) {
             $this->middleware('nice_artisan');
         }
@@ -90,7 +96,8 @@ class NiceArtisanController extends AppController {
      *
      * @return Response
      */
-    public function show($option = null) {
+    public function show($option = null)
+    {
         $options = array_keys(config('commands'));
         array_push($options, 'customs');
 
@@ -117,7 +124,8 @@ class NiceArtisanController extends AppController {
      * @param  Request  $request
      * @param  string $command
      */
-    public function command(Request $request, $command) {
+    public function command(Request $request, $command)
+    {
         if (array_key_exists('argument_name', $request->all())) {
             $this->validate($request, ['argument_name' => 'required']);
         }

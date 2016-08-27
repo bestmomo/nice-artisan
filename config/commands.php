@@ -5,10 +5,9 @@ return [
     /*
     | Make commands
     */
-    
     'make' => [
         'make:auth',
-        'make:console',
+        'make:command',
         'make:event',
         'make:job',
         'make:listener',
@@ -21,12 +20,13 @@ return [
         'make:seeder',
         'make:controller',
         'make:middleware',
+        'make:mail',
+        'make:notification',
     ],  
 
     /*
     | Migrate commands
     */
-
     'migrate' => [
         'migrate',
         'migrate:install',
@@ -39,7 +39,6 @@ return [
     /*
     | Route commands
     */
-
     'route' => [
         'route:cache',
         'route:clear',
@@ -49,7 +48,6 @@ return [
     /*
     | Queue commands
     */
-
     'queue' => [
         'queue:table',
         'queue:failed',
@@ -61,12 +59,12 @@ return [
         'queue:restart',
         //'queue:listen',
         'queue:subscribe',
+        'queue:table',
     ],    
     
     /*
     | Config commands
     */
-
     'config' => [
         'config:cache',
         'config:clear',
@@ -75,7 +73,6 @@ return [
     /*
     | Cache commands
     */
-
     'cache' => [
         'cache:clear',
         'cache:table',
@@ -84,21 +81,21 @@ return [
     /*
     | Miscellaneous commands
     */
-
     'miscellaneous' => [
-        'app:name',
+        'app:name', 
+        'auth:clear-resets',
         'clear-compiled',
+        'db:seed',
         'event:generate',
         'down',
         'env',
         'key:generate',
         'optimize',
+        'schedule:run',
         'serve',
+        'session:table',
+        'storage:link',        
         'vendor:publish',
         'view:clear',
-        'schedule:run',
-        'db:seed',
-        'session:table',
     ],
 ];
-
