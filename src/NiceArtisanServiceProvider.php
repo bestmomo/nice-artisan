@@ -36,7 +36,7 @@ class NiceArtisanServiceProvider extends ServiceProvider
         // Config
         $this->publishes([
             __DIR__ . '/../config/commands.php' => config_path('commands.php'),
-        ]);
+        ], 'niceartisan:config');
     }
 
     /**

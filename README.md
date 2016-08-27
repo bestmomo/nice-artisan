@@ -27,7 +27,7 @@ The next required step is to add the service provider to config/app.php :
 
 And copy the package config to your local config with the publish command:
 ```
-    php artisan vendor:publish --provider="Bestmomo\NiceArtisan\NiceArtisanServiceProvider::class"
+    php artisan vendor:publish --tag=niceartisan:config
 ```
 
 You can change options and commands in `config/commands.php`. The menu is dynamically created with this config.
