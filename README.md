@@ -7,15 +7,19 @@ This package is to add a web interface for Laravel 5 Artisan.
 
 Add Nice Artisan to your composer.json file :
 
-For Laravel 5.1
+- For Laravel 5.1
 ```
     composer require bestmomo/nice-artisan:0.3.*
 ```
-For Laravel 5.2
+- For Laravel 5.2
 ```
     composer require bestmomo/nice-artisan:0.4.*
 ```
-For Laravel 5.3
+- For Laravel 5.3
+```
+    composer require bestmomo/nice-artisan:0.5.*
+```
+- For Laravel 5.4
 ```
     composer require bestmomo/nice-artisan
 ```
@@ -74,13 +78,8 @@ class NiceArtisan
 And register it in Kernel with `nice_artisan` name :
 
 ```
-protected $routeMiddleware = [
-    ....
-    'nice_artisan' => \App\Http\Middleware\NiceArtisan::class,
-];
-
+'nice_artisan' => \App\Http\Middleware\NiceArtisan::class,
 ``` 
-
 
 ### Screenshots ###
 

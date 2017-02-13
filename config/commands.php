@@ -76,6 +76,7 @@ return [
     'cache' => [
         'cache:clear',
         'cache:table',
+        'cache:forget',
     ],
     
     /*
@@ -92,6 +93,7 @@ return [
         'key:generate',
         'optimize',
         'schedule:run',
+        'schedule:finish',
         'serve',
         'session:table',
         'storage:link',        
