@@ -32,7 +32,7 @@
                                             @if($option->getDefault() !== false)
                                                 <div class="input-field">
                                                     <input type="text" name="option_{{ $option->getName() }}" placeholder="{{ is_array($option->getDefault()) ? '' : $option->getDefault() }}">
-                                                    <label>--{{ $option->getName() . ' (' . $option->getDescription() }})</span></label>
+                                                    <label>--{{ $option->getName() . ' (' . $option->getDescription() }})</label>
                                                 </div>
                                             @else
                                                 <p>
