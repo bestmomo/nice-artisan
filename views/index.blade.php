@@ -3,7 +3,9 @@
 @section('content')
 
         <ul class="collapsible popout" data-collapsible="accordion">
-
+            @php
+                $idIndex = 0;
+            @endphp
             @foreach($items as $item)
                 <li>
                     <div class="collapsible-header">{{ $item->getName() . ' (' . $item->getDescription() . ')' }}</div>
@@ -34,8 +36,8 @@
                                                 </div>
                                             @else
                                                 <p>
-                                                    <input type="checkbox" id="{{ $option->getDescription() }}" name="option_{{ $option->getName() }}">
-                                                    <label for="{{ $option->getDescription() }}">{{ $option->getDescription() }}</label>
+                                                    <input type="checkbox" id="id{{ ++$idIndex }}" name="option_{{ $option->getName() }}">
+                                                    <label for="id{{ $idIndex }}">{{ $option->getDescription() }}</label>
                                                 </p>
                                             @endif
                                         @endforeach
