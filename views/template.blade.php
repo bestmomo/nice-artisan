@@ -34,7 +34,7 @@
             
             <div class="row">
 
-                @if (count($errors) > 0)
+                @if (isset($errors) && count($errors) > 0)
                     <div class="col s12">
                       <div class="card red accent-4">
                         <div class="card-content white-text">
