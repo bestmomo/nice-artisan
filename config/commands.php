@@ -9,14 +9,17 @@ return [
         'make:auth',
         'make:command',
         'make:event',
+        'make:factory',
         'make:job',
         'make:listener',
         'make:model',
         'make:policy',
         'make:provider',
         'make:request',
+        'make:rule',
         'make:test',
         'make:migration',
+        'make:resource',
         'make:seeder',
         'make:controller',
         'make:middleware',
@@ -29,6 +32,7 @@ return [
     */
     'migrate' => [
         'migrate',
+        'migrate:fresh',
         'migrate:install',
         'migrate:rollback',
         'migrate:reset',
@@ -76,7 +80,6 @@ return [
     'cache' => [
         'cache:clear',
         'cache:table',
-        'cache:forget',
     ],
     
     /*
@@ -92,11 +95,12 @@ return [
         'env',
         'key:generate',
         'optimize',
+        'package:discover',
+        'preset',
         'schedule:run',
-        'schedule:finish',
         'serve',
         'session:table',
-        'storage:link',        
+        'storage:link',
         'vendor:publish',
         'view:clear',
     ],

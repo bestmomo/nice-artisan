@@ -18,5 +18,12 @@
     "psr-4": {
       "Bestmomo\\NiceArtisan\\": "src/"
     }
+  },
+  "extra": {
+      "laravel": {
+          "providers": [
+              "Bestmomo\\NiceArtisan\\NiceArtisanServiceProvider"
+          ]
+      }
   }
 }

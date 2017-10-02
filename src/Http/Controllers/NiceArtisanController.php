@@ -54,6 +54,7 @@ class NiceArtisanController extends AppController
         'schedule:finish',
         'migrate',
         'make:migration',
+        'migrate:fresh',
         'migrate:install',
         'migrate:rollback',
         'migrate:reset',
@@ -79,6 +80,11 @@ class NiceArtisanController extends AppController
         'make:mail',
         'make:notification',
         'notifications:table',
+        'make:factory',
+        'make:resource',
+        'make:rule',
+        'preset',
+        'package:discover',
     ];
 
     /**

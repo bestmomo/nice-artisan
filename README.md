@@ -21,15 +21,19 @@ Add Nice Artisan to your composer.json file :
 ```
 - For Laravel 5.4
 ```
+    composer require bestmomo/nice-artisan:1.0.*
+```
+- For Laravel 5.5
+```
     composer require bestmomo/nice-artisan
 ```
 
-The next required step is to add the service provider to config/app.php :
+For Laravel < 5.5 the next required step is to add the service provider to **config/app.php** (for Laravel 5.5 there is the package discovery) :
 ```
     Bestmomo\NiceArtisan\NiceArtisanServiceProvider::class,
 ```
 
-And copy the package config to your local config with the publish command:
+Last copy the package config to your local config with the **publish** command:
 ```
     php artisan vendor:publish --tag=niceartisan:config
 ```
