@@ -85,6 +85,7 @@ class NiceArtisanController extends AppController
         'make:rule',
         'preset',
         'package:discover',
+        'make:exception',
     ];
 
     /**
