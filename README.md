@@ -40,7 +40,7 @@ Last copy the package config to your local config with the **publish** command:
 
 You can change options and commands in `config/commands.php`. The menu is dynamically created with this config.
 
-Now it must work with this url :
+Now it must work with this url (you can also change it in the config file):
 ```
     .../niceartisan
 ```

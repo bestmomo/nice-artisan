@@ -21,12 +21,17 @@
                     <ul id="nav-mobile" class="left hide-on-med-and-down">
                         @for ($i = 0; $i < count($options); $i++)
                             @if($i == 0)
-                                <li {!! request()->is('niceartisan') || request()->is('niceartisan/' . $options[$i]) ? 'class="active"' : '' !!}>
+                                <li {!! request()->routeIs('niceartisan') ||
+                                        request()->routeIs('niceartisan', ['option' => $options[$i]]) ?
+                                        'class="active"' : '' !!}>
                             @else
-                                <li {!! request()->is('niceartisan/' . $options[$i]) ? 'class="active"' : '' !!}>
+                                <li {!! request()->routeIs('niceartisan', ['option' => $options[$i]]) ?
+                                        'class="active"' : '' !!}>
                             @endif
-                                    <a href="{!! url('niceartisan/' . $options[$i]) !!}">{{ ucfirst($options[$i]) }}</a>
-                                </li>  
+                                    <a href="{!! route('niceartisan', ['option' => $options[$i]]) !!}">
+                                        {{ ucfirst($options[$i]) }}
+                                    </a>
+                                </li>
                         @endfor
                     </ul>
                 </div>

@@ -107,7 +107,7 @@ class NiceArtisanController extends AppController
      */
     public function show($option = null)
     {
-        $options = array_keys(config('commands'));
+        $options = array_keys(config('commands.commands'));
         array_push($options, 'customs');
 
         if (is_null($option)) {
@@ -121,7 +121,7 @@ class NiceArtisanController extends AppController
         if ($option == 'customs') {
             $items = array_diff_key(Artisan::all(), array_flip($this->coreCommands));
         } else {
-            $items = array_intersect_key(Artisan::all(), array_flip(config('commands.' . $option)));
+            $items = array_intersect_key(Artisan::all(), array_flip(config('commands.commands.' . $option)));
         }
 
         return view('NiceArtisan::index', compact('items', 'options'));

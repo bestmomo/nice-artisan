@@ -25,14 +25,15 @@ class NiceArtisanServiceProvider extends ServiceProvider
         AliasLoader::getInstance()->alias('AppKernel', $nameSpace . 'Http\Kernel');
 
         // Routes
-        $this->app->router->group(['middleware' => ['web'], 'namespace' => $nameSpace . 'Http\Controllers'], function()
-        {
-            require __DIR__.'/Http/routes.php';
-        });
+        if (! $this->app->routesAreCached()) {
+            $this->app->router->group(['middleware' => ['web'], 'namespace' => $nameSpace . 'Http\Controllers'], function () {
+                require __DIR__ . '/Http/routes.php';
+            });
+        }
 
         // Views
         $this->loadViewsFrom(__DIR__.'/../views', 'NiceArtisan');
-        
+
         // Config
         $this->publishes([
             __DIR__ . '/../config/commands.php' => config_path('commands.php'),
