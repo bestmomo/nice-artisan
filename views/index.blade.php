@@ -11,7 +11,7 @@
                     <div class="collapsible-header">{{ $item->getName() . ' (' . $item->getDescription() . ')' }}</div>
                     <div class="collapsible-body">
                         <div class="row">
-                            <form  class="col s12" method="POST" action="{!! url('niceartisan/item/' . $item->getName()) !!}">
+                            <form  class="col s12" method="POST" action="{!! route('niceartisan.exec', ['class' => $item->getName()]) !!}">
                                 {!! csrf_field() !!}
                                 <input type="hidden" name="command" value="{{ $item->getName() }}">
                                 @if(count($item->getDefinition()->getArguments()) > 0)
