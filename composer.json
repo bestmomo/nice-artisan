@@ -1,7 +1,7 @@
 {
-  "name": "bestmomo/nice-artisan",
+  "name": "heyday/laravel-6-artisan",
   "description": "Web interface for Laravel Artisan",
-  "homepage": "http://github.com/bestmomo/nice-artisan",
+  "homepage": "http://github.com/heyday/laravel-6-artisan",
   "license": "MIT",
   "authors": [
     {
