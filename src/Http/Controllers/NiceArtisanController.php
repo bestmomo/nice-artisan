@@ -7,6 +7,7 @@ use AppController;
 use Artisan;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class NiceArtisanController extends AppController
 {
@@ -148,7 +149,7 @@ class NiceArtisanController extends AppController
         $params = [];
         foreach ($inputs as $key => $value) {
             if ($value != '') {
-                $name = starts_with($key, 'argument') ? substr($key, 9) : '--' . substr($key, 7);
+                $name = Str::startsWith($key, 'argument') ? substr($key, 9) : '--' . substr($key, 7);
                 $params[$name] = $value;
             }
         }
@@ -161,5 +162,4 @@ class NiceArtisanController extends AppController
 
         return back()->with('output', Artisan::output());
     }
-
 }
