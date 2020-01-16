@@ -37,7 +37,7 @@ return [
             'make:rule',
             'make:seeder',
             'make:test',
-        ],  
+        ],
 
         /*
         | Migrate commands
@@ -60,7 +60,7 @@ return [
             'route:clear',
             'route:list',
         ],
-        
+
         /*
         | Queue commands
         */
@@ -76,8 +76,8 @@ return [
             //'queue:listen',
             'queue:subscribe',
             'queue:table',
-        ],    
-        
+        ],
+
         /*
         | Config commands
         */
@@ -85,7 +85,7 @@ return [
             'config:cache',
             'config:clear',
         ],
-        
+
         /*
         | Cache commands
         */
@@ -93,12 +93,12 @@ return [
             'cache:clear',
             'cache:table',
         ],
-        
+
         /*
         | Miscellaneous commands
         */
         'miscellaneous' => [
-            'app:name', 
+            'app:name',
             'auth:clear-resets',
             'clear-compiled',
             'db:seed',
@@ -115,6 +115,7 @@ return [
             'storage:link',
             'vendor:publish',
             'view:clear',
+            'ui vue --auth'
         ],
     ],
 ];
