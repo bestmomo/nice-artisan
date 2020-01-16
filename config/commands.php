@@ -114,8 +114,7 @@ return [
             'session:table',
             'storage:link',
             'vendor:publish',
-            'view:clear',
-            'ui vue --auth'
+            'view:clear'
         ],
     ],
 ];
