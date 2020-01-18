@@ -7,6 +7,7 @@ use AppController;
 use Artisan;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class NiceArtisanController extends AppController
 {
@@ -15,10 +16,8 @@ class NiceArtisanController extends AppController
      *
      */
     protected $coreCommands = [
-        'make:auth',
         'help',
         'list',
-        'app:name',
         'clear-compiled',
         'make:command',
         'config:cache',
@@ -86,6 +85,14 @@ class NiceArtisanController extends AppController
         'preset',
         'package:discover',
         'make:exception',
+        'make:channel',
+        'make:observer',
+        'event:list',
+        'event:clear',
+        'view:cache',
+        'event:cache',
+        'optimize:clear',
+        'db:wipe',
     ];
 
     /**
@@ -124,6 +131,8 @@ class NiceArtisanController extends AppController
             $items = array_intersect_key(Artisan::all(), array_flip(config('commands.commands.' . $option)));
         }
 
+        ksort($items);
+
         return view('NiceArtisan::index', compact('items', 'options'));
     }
 
@@ -148,7 +157,7 @@ class NiceArtisanController extends AppController
         $params = [];
         foreach ($inputs as $key => $value) {
             if ($value != '') {
-                $name = starts_with($key, 'argument') ? substr($key, 9) : '--' . substr($key, 7);
+                $name = Str::startsWith($key, 'argument') ? substr($key, 9) : '--' . substr($key, 7);
                 $params[$name] = $value;
             }
         }
@@ -161,5 +170,4 @@ class NiceArtisanController extends AppController
 
         return back()->with('output', Artisan::output());
     }
-
 }

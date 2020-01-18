@@ -17,7 +17,7 @@ return [
         | Make commands
         */
         'make' => [
-            'make:auth',
+            'make:channel',
             'make:command',
             'make:controller',
             'make:event',
@@ -30,6 +30,7 @@ return [
             'make:migration',
             'make:model',
             'make:notification',
+            'make:observer',
             'make:policy',
             'make:provider',
             'make:request',
@@ -37,7 +38,7 @@ return [
             'make:rule',
             'make:seeder',
             'make:test',
-        ],  
+        ],
 
         /*
         | Migrate commands
@@ -60,7 +61,17 @@ return [
             'route:clear',
             'route:list',
         ],
-        
+
+        /*
+        | Events commands
+        */
+        'events' => [
+            'event:generate',
+            'event:cache',
+            'event:clear',
+            'event:list',
+        ],
+
         /*
         | Queue commands
         */
@@ -76,8 +87,8 @@ return [
             //'queue:listen',
             'queue:subscribe',
             'queue:table',
-        ],    
-        
+        ],
+
         /*
         | Config commands
         */
@@ -85,28 +96,29 @@ return [
             'config:cache',
             'config:clear',
         ],
-        
+
         /*
         | Cache commands
         */
         'cache' => [
             'cache:clear',
             'cache:table',
+            'view:cache',
         ],
-        
+
         /*
         | Miscellaneous commands
         */
         'miscellaneous' => [
-            'app:name', 
             'auth:clear-resets',
             'clear-compiled',
             'db:seed',
-            'event:generate',
+            'db:wipe',
             'down',
             'env',
             'key:generate',
             'optimize',
+            'optimize:clear',
             'package:discover',
             'preset',
             'schedule:run',
