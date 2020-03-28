@@ -20,6 +20,7 @@ return [
             'make:channel',
             'make:command',
             'make:controller',
+            'make:component',
             'make:event',
             'make:exception',
             'make:factory',
@@ -127,6 +128,8 @@ return [
             'storage:link',
             'vendor:publish',
             'view:clear',
+            'stub:publish',
+            'test',
         ],
     ],
 ];

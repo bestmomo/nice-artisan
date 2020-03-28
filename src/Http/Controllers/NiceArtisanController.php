@@ -93,6 +93,9 @@ class NiceArtisanController extends AppController
         'event:cache',
         'optimize:clear',
         'db:wipe',
+        'make:component',
+        'stub:publish',
+        'test',
     ];
 
     /**
