@@ -1,6 +1,6 @@
 ## Nice Artisan ##
 
-This package is to add a web interface for Laravel 5, 6 or 7 Artisan.
+This package is to add a web interface for Laravel 5 and earlier Artisan.
 
 
 ### Installation ###
@@ -34,6 +34,10 @@ Add Nice Artisan to your composer.json file :
 - For Laravel ^7.0
 ```
     composer require bestmomo/nice-artisan:^1.3
+```
+- For Laravel ^8.0
+```
+    composer require bestmomo/nice-artisan:^1.4
 ```
 
 For Laravel < 5.5 the next required step is to add the service provider to **config/app.php** (for Laravel 5.5 there is the package discovery) :
@@ -91,11 +95,10 @@ And register it in Kernel with `nice_artisan` name :
 
 ```
 'nice_artisan' => \App\Http\Middleware\NiceArtisan::class,
-``` 
+```
 
 ### Screenshots ###
 
 ![nice-artisan1](https://cloud.githubusercontent.com/assets/2959682/11610549/a9a3055c-9ba6-11e5-936b-f1d3830baf62.jpg)
 ![nice-artisan2](https://cloud.githubusercontent.com/assets/2959682/11610548/a9a308e0-9ba6-11e5-9cee-94d7cc373024.jpg)
 ![nice-artisan3](https://cloud.githubusercontent.com/assets/2959682/11610547/a9a00942-9ba6-11e5-88b6-9c30f25f220f.jpg)
-

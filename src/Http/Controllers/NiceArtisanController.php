@@ -96,6 +96,10 @@ class NiceArtisanController extends AppController
         'make:component',
         'stub:publish',
         'test',
+        'schema:dump',
+        'make:cast',
+        'queue:batches-table',
+        'queue:retry-batch',
     ];
 
     /**
