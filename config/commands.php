@@ -123,6 +123,7 @@ return [
             'package:discover',
             'preset',
             'schedule:run',
+            'schema:dump',
             'serve',
             'session:table',
             'storage:link',

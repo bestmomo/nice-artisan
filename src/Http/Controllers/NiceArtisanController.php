@@ -96,6 +96,7 @@ class NiceArtisanController extends AppController
         'make:component',
         'stub:publish',
         'test',
+        'schema:dump',
     ];
 
     /**
