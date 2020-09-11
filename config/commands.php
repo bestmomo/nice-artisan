@@ -17,6 +17,7 @@ return [
         | Make commands
         */
         'make' => [
+            'make:cast',
             'make:channel',
             'make:command',
             'make:controller',
@@ -77,6 +78,7 @@ return [
         | Queue commands
         */
         'queue' => [
+            'queue:batches-table',
             'queue:table',
             'queue:failed',
             'queue:retry',
@@ -85,9 +87,9 @@ return [
             'queue:failed-table',
             'queue:work',
             'queue:restart',
+            'queue:retry-batch',
             //'queue:listen',
             'queue:subscribe',
-            'queue:table',
         ],
 
         /*
