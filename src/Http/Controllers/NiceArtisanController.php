@@ -100,6 +100,8 @@ class NiceArtisanController extends AppController
         'make:cast',
         'queue:batches-table',
         'queue:retry-batch',
+        'queue:clear',
+        'schedule:work',
     ];
 
     /**

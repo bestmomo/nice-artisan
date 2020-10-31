@@ -90,6 +90,7 @@ return [
             'queue:retry-batch',
             //'queue:listen',
             'queue:subscribe',
+            'queue:clear',
         ],
 
         /*
@@ -125,6 +126,7 @@ return [
             'package:discover',
             'preset',
             'schedule:run',
+            'schedule:work',
             'schema:dump',
             'serve',
             'session:table',
