@@ -116,6 +116,7 @@ return [
         'miscellaneous' => [
             'auth:clear-resets',
             'clear-compiled',
+            'db',
             'db:seed',
             'db:wipe',
             'down',
@@ -125,7 +126,9 @@ return [
             'optimize:clear',
             'package:discover',
             'preset',
+            'schedule:list',
             'schedule:run',
+            'schedule:test',
             'schedule:work',
             'schema:dump',
             'serve',

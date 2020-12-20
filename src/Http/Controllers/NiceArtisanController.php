@@ -102,6 +102,9 @@ class NiceArtisanController extends AppController
         'queue:retry-batch',
         'queue:clear',
         'schedule:work',
+        'schedule:list',
+        'schedule:test',
+        'db',
     ];
 
     /**
