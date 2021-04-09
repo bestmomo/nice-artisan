@@ -73,6 +73,7 @@ class NiceArtisanController extends AppController
         'queue:work',
         'queue:restart',
         'queue:listen',
+        'queue:prune-batches',
         'queue:subscribe',
         'auth:clear-resets',
         'storage:link',

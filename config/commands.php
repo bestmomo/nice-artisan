@@ -91,6 +91,7 @@ return [
             //'queue:listen',
             'queue:subscribe',
             'queue:clear',
+            'queue:prune-batches',
         ],
 
         /*
