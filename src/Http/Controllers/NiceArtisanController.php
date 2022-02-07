@@ -67,6 +67,8 @@ class NiceArtisanController extends AppController
         'queue:forget',
         'queue:flush',
         'queue:failed-table',
+        'queue:monitor',
+        'queue:prune-failed',
         'make:controller',
         'make:middleware',
         'session:table',
@@ -106,6 +108,10 @@ class NiceArtisanController extends AppController
         'schedule:list',
         'schedule:test',
         'db',
+        'model:prune',
+        '_complete',
+        'completion',
+        'schedule:clear-cache',
     ];
 
     /**

@@ -78,7 +78,6 @@ return [
         | Queue commands
         */
         'queue' => [
-            'queue:batches-table',
             'queue:table',
             'queue:failed',
             'queue:retry',
@@ -87,11 +86,14 @@ return [
             'queue:failed-table',
             'queue:work',
             'queue:restart',
-            'queue:retry-batch',
             //'queue:listen',
             'queue:subscribe',
-            'queue:clear',
+            'queue:table',
+            'queue:batches-table',
+            'queue:retry-batch',
             'queue:prune-batches',
+            'queue:monitor',
+            'queue:prune-failed',
         ],
 
         /*
@@ -117,7 +119,6 @@ return [
         'miscellaneous' => [
             'auth:clear-resets',
             'clear-compiled',
-            'db',
             'db:seed',
             'db:wipe',
             'down',
@@ -127,10 +128,7 @@ return [
             'optimize:clear',
             'package:discover',
             'preset',
-            'schedule:list',
             'schedule:run',
-            'schedule:test',
-            'schedule:work',
             'schema:dump',
             'serve',
             'session:table',
@@ -139,6 +137,10 @@ return [
             'view:clear',
             'stub:publish',
             'test',
+            'model:prune',
+            '_complete',
+            'completion',
+            'schedule:clear-cache',
         ],
     ],
 ];
