@@ -39,6 +39,10 @@ Add Nice Artisan to your composer.json file :
 ```
     composer require bestmomo/nice-artisan:^1.4
 ```
+- For Laravel ^9.0
+```
+    composer require bestmomo/nice-artisan:^1.5
+```
 
 For Laravel < 5.5 the next required step is to add the service provider to **config/app.php** (for Laravel 5.5 there is the package discovery) :
 ```
