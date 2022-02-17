@@ -25,11 +25,7 @@ class NiceArtisanServiceProvider extends ServiceProvider
         AliasLoader::getInstance()->alias('AppKernel', $nameSpace . 'Http\Kernel');
 
         // Routes
-        if (! $this->app->routesAreCached()) {
-            $this->app->router->group(['middleware' => ['web'], 'namespace' => $nameSpace . 'Http\Controllers'], function () {
-                require __DIR__ . '/Http/routes.php';
-            });
-        }
+        $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
 
         // Views
         $this->loadViewsFrom(__DIR__.'/../views', 'NiceArtisan');

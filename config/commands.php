@@ -38,6 +38,7 @@ return [
             'make:request',
             'make:resource',
             'make:rule',
+            'make:scope',
             'make:seeder',
             'make:test',
         ],
