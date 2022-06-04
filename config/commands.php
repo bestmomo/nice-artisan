@@ -5,7 +5,11 @@ return [
     | Package settings
     */
     'settings' => [
-        'route' => 'niceartisan',
+        'route' => 'niceartisan',    
+        'middlewares' => [
+            'web',
+            // 'nice_artisan',
+        ],
     ],
 
     /*

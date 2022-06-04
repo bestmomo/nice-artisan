@@ -4,6 +4,7 @@ namespace Bestmomo\NiceArtisan;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Route;
 
 class NiceArtisanServiceProvider extends ServiceProvider
 {
@@ -25,7 +26,10 @@ class NiceArtisanServiceProvider extends ServiceProvider
         AliasLoader::getInstance()->alias('AppKernel', $nameSpace . 'Http\Kernel');
 
         // Routes
-        $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
+        Route::middleware(config('commands.settings.middlewares'))
+            ->group(function () {
+                $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
+            });
 
         // Views
         $this->loadViewsFrom(__DIR__.'/../views', 'NiceArtisan');

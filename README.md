@@ -41,7 +41,7 @@ Add Nice Artisan to your composer.json file :
 ```
 - For Laravel ^9.0
 ```
-    composer require bestmomo/nice-artisan:^1.5
+    composer require bestmomo/nice-artisan:^1.6
 ```
 
 For Laravel < 5.5 the next required step is to add the service provider to **config/app.php** (for Laravel 5.5 there is the package discovery) :
@@ -99,6 +99,17 @@ And register it in Kernel with `nice_artisan` name :
 
 ```
 'nice_artisan' => \App\Http\Middleware\NiceArtisan::class,
+```
+
+Before V1.6 this middleware will be automatically detected by package.
+
+**From V1.6 you must specify the middleware in the **commands** configuration file :**
+
+```
+'middlewares' => [
+    'web',
+    'nice_artisan',
+],
 ```
 
 ### Screenshots ###

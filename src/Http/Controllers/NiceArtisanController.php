@@ -116,18 +116,6 @@ class NiceArtisanController extends AppController
     ];
 
     /**
-     * Create a new NiceArtisanController controller instance.
-     *
-     * @return void
-     */
-    public function __construct(Kernel $kernel)
-    {
-        if ($kernel->hasRouteMiddleware('nice_artisan')) {
-            $this->middleware('nice_artisan');
-        }
-    }
-
-    /**
      * Show the commands.
      *
      * @return Response
