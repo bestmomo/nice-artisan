@@ -5,7 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
         <title>Nice Artisan</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     </head>
 
     <body>
@@ -18,14 +19,15 @@
 
             <nav>
                 <div class="nav-wrapper">
-                    <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="hide-on-med-and-down">
                         @for ($i = 0; $i < count($options); $i++)
                             @if($i == 0)
-                                <li {!! request()->routeIs('niceartisan') ||
-                                        request()->routeIs('niceartisan', ['option' => $options[$i]]) ?
+                                <li {!! request()->is('niceartisan') ||
+                                        request()->is('niceartisan/' . $options[$i]) ?
                                         'class="active"' : '' !!}>
                             @else
-                                <li {!! request()->routeIs('niceartisan', ['option' => $options[$i]]) ?
+                                <li {!! request()->is('niceartisan/' . $options[$i]) ?
                                         'class="active"' : '' !!}>
                             @endif
                                     <a href="{!! route('niceartisan', ['option' => $options[$i]]) !!}">
@@ -36,6 +38,23 @@
                     </ul>
                 </div>
             </nav>
+
+            <ul class="sidenav" id="mobile">
+                @for ($i = 0; $i < count($options); $i++)
+                @if($i == 0)
+                    <li {!! request()->is('niceartisan') ||
+                            request()->is('niceartisan/' . $options[$i]) ?
+                            'class="active"' : '' !!}>
+                @else
+                    <li {!! request()->is('niceartisan/' . $options[$i]) ?
+                            'class="active"' : '' !!}>
+                @endif
+                        <a href="{!! route('niceartisan', ['option' => $options[$i]]) !!}">
+                            {{ ucfirst($options[$i]) }}
+                        </a>
+                    </li>
+                @endfor
+            </ul>
             
             <div class="row">
 
@@ -80,8 +99,11 @@
 
         </div>
         
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <script>
+            M.AutoInit();
+        </script>
 
     </body>
 </html>

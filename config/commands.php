@@ -122,6 +122,7 @@ return [
         | Miscellaneous commands
         */
         'miscellaneous' => [
+            'about',
             'auth:clear-resets',
             'clear-compiled',
             'db:seed',
@@ -143,6 +144,7 @@ return [
             'stub:publish',
             'test',
             'model:prune',
+            'model:show',
             '_complete',
             'completion',
             'schedule:clear-cache',

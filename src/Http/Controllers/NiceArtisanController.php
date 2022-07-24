@@ -113,6 +113,8 @@ class NiceArtisanController extends AppController
         'completion',
         'schedule:clear-cache',
         'make:scope',
+        'about',
+        "model:show",
     ];
 
     /**
