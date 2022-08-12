@@ -121,12 +121,10 @@ return [
         /*
         | Miscellaneous commands
         */
-        'miscellaneous' => [
+        'misc' => [
             'about',
             'auth:clear-resets',
             'clear-compiled',
-            'db:seed',
-            'db:wipe',
             'down',
             'env',
             'key:generate',
@@ -148,6 +146,18 @@ return [
             '_complete',
             'completion',
             'schedule:clear-cache',
+            'docs', 
+        ],
+
+        /*
+        | DB commands
+        */
+        'DB' => [
+            'db:seed',
+            'db:wipe',
+            'db:monitor',
+            'db:show',
+            'db:table',
         ],
     ],
 ];
