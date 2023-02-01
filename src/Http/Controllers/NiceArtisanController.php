@@ -119,6 +119,9 @@ class NiceArtisanController extends AppController
         'db:monitor',
         'db:show',
         'db:table',
+        'env:decrypt',
+        'env:encrypt',
+        'cache:prune-stale-tags',
     ];
 
     /**

@@ -115,7 +115,8 @@ return [
         'cache' => [
             'cache:clear',
             'cache:table',
-            'view:cache',
+            'cache:prune-stale-tags',
+            'view:cache',            
         ],
 
         /*
@@ -146,7 +147,9 @@ return [
             '_complete',
             'completion',
             'schedule:clear-cache',
-            'docs', 
+            'docs',
+            'env:decrypt',
+            'env:encrypt',
         ],
 
         /*
