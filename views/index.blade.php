@@ -36,8 +36,10 @@
                                                 </div>
                                             @else
                                                 <p>
-                                                    <input type="checkbox" id="id{{ ++$idIndex }}" name="option_{{ $option->getName() }}">
-                                                    <label for="id{{ $idIndex }}">{{ $option->getDescription() }}</label>
+                                                    <label for="id{{ ++$idIndex }}">
+                                                        <input type="checkbox" id="id{{ $idIndex }}" name="option_{{ $option->getName() }}">
+                                                        <span>{{ $option->getDescription() }}</span>
+                                                    </label>
                                                 </p>
                                             @endif
                                         @endforeach
