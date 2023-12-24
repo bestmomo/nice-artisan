@@ -45,6 +45,7 @@ return [
             'make:scope',
             'make:seeder',
             'make:test',
+            'make:view',
         ],
 
         /*
@@ -107,6 +108,7 @@ return [
         'config' => [
             'config:cache',
             'config:clear',
+            'config:show',
         ],
 
         /*
@@ -125,10 +127,12 @@ return [
         'misc' => [
             'about',
             'auth:clear-resets',
+            'channel:list',
             'clear-compiled',
             'down',
             'env',
             'key:generate',
+            'lang:publish',
             'optimize',
             'optimize:clear',
             'package:discover',
@@ -147,6 +151,7 @@ return [
             '_complete',
             'completion',
             'schedule:clear-cache',
+            'schedule:interrupt',
             'docs',
             'env:decrypt',
             'env:encrypt',

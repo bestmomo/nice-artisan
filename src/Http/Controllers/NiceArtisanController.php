@@ -122,6 +122,11 @@ class NiceArtisanController extends AppController
         'env:decrypt',
         'env:encrypt',
         'cache:prune-stale-tags',
+        'make:view',
+        'lang:publish',
+        'channel:list',
+        'config:show',
+        'schedule:interrupt',
     ];
 
     /**
