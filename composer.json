@@ -1,29 +1,29 @@
 {
-  "name": "bestmomo/nice-artisan",
-  "description": "Web interface for Laravel Artisan",
-  "homepage": "http://github.com/bestmomo/nice-artisan",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Bestmomo",
-      "email": "grandheretique@free.fr",
-      "homepage":"https://laravel.sillo.org"
+    "name": "bestmomo/nice-artisan",
+    "description": "Web interface for Laravel Artisan",
+    "homepage": "http://github.com/bestmomo/nice-artisan",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bestmomo",
+            "email": "grandheretique@free.fr",
+            "homepage": "https://laravel.sillo.org"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "illuminate/support": "^10.0|^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bestmomo\\NiceArtisan\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bestmomo\\NiceArtisan\\NiceArtisanServiceProvider"
+            ]
+        }
     }
-  ],
-  "require": {
-    "php": ">=8.0",
-    "illuminate/support": "^10.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Bestmomo\\NiceArtisan\\": "src/"
-    }
-  },
-  "extra": {
-      "laravel": {
-          "providers": [
-              "Bestmomo\\NiceArtisan\\NiceArtisanServiceProvider"
-          ]
-      }
-  }
 }
