@@ -127,6 +127,20 @@ class NiceArtisanController extends AppController
         'channel:list',
         'config:show',
         'schedule:interrupt',
+        'make:cache-table',
+        'make:class',
+        'make:enum',
+        'make:notifications-table',
+        'make:queue-batches-table',
+        'make:queue-failed-table',
+        'make:queue-table',
+        'make:session-table',
+        'make:trait',
+        'config:publish',
+        'install:api',
+        'make:interface',
+        'storage:unlink',
+        'install:broadcasting',
     ];
 
     /**
