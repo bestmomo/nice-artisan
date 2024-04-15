@@ -47,7 +47,7 @@ Add Nice Artisan to your composer.json file :
 ```
     composer require bestmomo/nice-artisan:^1.7
 ```
-- For Laravel ^10.0
+- For Laravel ^11.0
 ```
     composer require bestmomo/nice-artisan:^1.8
 ```
