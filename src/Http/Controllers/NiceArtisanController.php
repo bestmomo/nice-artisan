@@ -181,11 +181,11 @@ class NiceArtisanController extends AppController
     public function command(Request $request, $command)
     {
         if (array_key_exists('argument_name', $request->all())) {
-            $this->validate($request, ['argument_name' => 'required']);
+            $request->validate(['argument_name' => 'required']);
         }
 
         if (array_key_exists('argument_id', $request->all())) {
-            $this->validate($request, ['argument_id' => 'required']);
+            $request->validate(['argument_id' => 'required']);
         }
 
         $inputs = $request->except('_token', 'command');
