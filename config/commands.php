@@ -34,6 +34,7 @@ return [
             'make:factory',
             'make:interface',
             'make:job',
+            'make:job-middleware',
             'make:listener',
             'make:mail',
             'make:middleware',
@@ -55,8 +56,7 @@ return [
             'make:session-table',
             'make:test',
             'make:trait',
-            'make:view',
-            'make:interface'
+            'make:view',            
         ],
 
         /*
@@ -150,6 +150,7 @@ return [
             'key:generate',
             'install:api',
             'install:broadcasting',
+            'invoke-serialized-closure',
             'lang:publish',            
             'model:prune',
             'model:show',
@@ -169,7 +170,7 @@ return [
             'test',
             'vendor:publish',
             'view:clear',
-            '_complete',
+            '_complete',            
         ],
 
         /*

@@ -141,6 +141,8 @@ class NiceArtisanController extends AppController
         'make:interface',
         'storage:unlink',
         'install:broadcasting',
+        'make:job-middleware',
+        'invoke-serialized-closure',
     ];
 
     /**
