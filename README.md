@@ -1,6 +1,6 @@
 ## Nice Artisan ##
 
-This package is to add a web interface for Laravel 5 and earlier Artisan.
+This package is to add a web interface for Artisan.
 
 
 ### Installation ###
