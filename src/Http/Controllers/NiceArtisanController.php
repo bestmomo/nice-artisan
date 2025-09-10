@@ -2,10 +2,9 @@
 
 namespace Bestmomo\NiceArtisan\Http\Controllers;
 
-use Bestmomo\NiceArtisan\Http\Kernel;
 use AppController;
-use Artisan;
 use Exception;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -143,6 +142,8 @@ class NiceArtisanController extends AppController
         'install:broadcasting',
         'make:job-middleware',
         'invoke-serialized-closure',
+        'make:config',
+        'config:make',
     ];
 
     /**

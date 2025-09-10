@@ -26,6 +26,7 @@ return [
             'make:channel',
             'make:class',
             'make:command',
+            'make:config',
             'make:controller',
             'make:component',
             'make:enum',
@@ -119,6 +120,7 @@ return [
         'config' => [
             'config:cache',
             'config:clear',
+            'config:make',
             'config:publish',
             'config:show',
         ],
