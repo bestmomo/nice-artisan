@@ -3,8 +3,8 @@
 namespace Bestmomo\NiceArtisan;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Route;
+use Bestmomo\NiceArtisan\Http\Middleware\EnsureAjax;
 
 class NiceArtisanServiceProvider extends ServiceProvider
 {
@@ -16,19 +16,10 @@ class NiceArtisanServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Get namespace
-        $nameSpace = $this->app->getNamespace();
-
-        // Set namespace alias for NiceArtisanController
-        AliasLoader::getInstance()->alias('AppController', $nameSpace . 'Http\Controllers\Controller');
-
-        // Set namespace alias for Kernel
-        AliasLoader::getInstance()->alias('AppKernel', $nameSpace . 'Http\Kernel');
-
         // Routes
         Route::middleware(config('commands.settings.middlewares'))
             ->group(function () {
-                $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
+                $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
             });
 
         // Views
@@ -36,8 +27,11 @@ class NiceArtisanServiceProvider extends ServiceProvider
 
         // Config
         $this->publishes([
-            __DIR__ . '/../config/commands.php' => config_path('commands.php'),
+            __DIR__ . '/../config/niceartisan.php' => config_path('niceartisan.php'),
         ], 'niceartisan:config');
+
+        // Middleware
+        $this->app['router']->aliasMiddleware('niceartisan.ajax', EnsureAjax::class);
     }
 
     /**

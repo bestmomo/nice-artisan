@@ -2,172 +2,88 @@
 
 namespace Bestmomo\NiceArtisan\Http\Controllers;
 
-use AppController;
 use Exception;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
+use Bestmomo\NiceArtisan\JsonListManager;
 
-class NiceArtisanController extends AppController
+class NiceArtisanController
 {
-    /**
-     * All core commands.
-     *
-     */
-    protected $coreCommands = [
-        'help',
-        'list',
-        'clear-compiled',
-        'make:command',
-        'config:cache',
-        'config:clear',
-        'make:console',
-        'event:generate',
-        'make:event',
-        'down',
-        'env',
-        'handler:command',
-        'handler:event',
-        'make:job',
-        'key:generate',
-        'make:listener',
-        'make:model',
-        'optimize',
-        'make:policy',
-        'make:provider',
-        'make:request',
-        'route:cache',
-        'route:clear',
-        'route:list',
-        'serve',
-        'make:test',
-        'tinker',
-        'up',
-        'vendor:publish',
-        'view:clear',
-        'cache:clear',
-        'cache:table',
-        'cache:forget',
-        'schedule:run',
-        'schedule:finish',
-        'migrate',
-        'make:migration',
-        'migrate:fresh',
-        'migrate:install',
-        'migrate:rollback',
-        'migrate:reset',
-        'migrate:refresh',
-        'migrate:status',
-        'db:seed',
-        'make:seeder',
-        'queue:table',
-        'queue:failed',
-        'queue:retry',
-        'queue:forget',
-        'queue:flush',
-        'queue:failed-table',
-        'queue:monitor',
-        'queue:prune-failed',
-        'make:controller',
-        'make:middleware',
-        'session:table',
-        'queue:work',
-        'queue:restart',
-        'queue:listen',
-        'queue:prune-batches',
-        'queue:subscribe',
-        'auth:clear-resets',
-        'storage:link',
-        'make:mail',
-        'make:notification',
-        'notifications:table',
-        'make:factory',
-        'make:resource',
-        'make:rule',
-        'preset',
-        'package:discover',
-        'make:exception',
-        'make:channel',
-        'make:observer',
-        'event:list',
-        'event:clear',
-        'view:cache',
-        'event:cache',
-        'optimize:clear',
-        'db:wipe',
-        'make:component',
-        'stub:publish',
-        'test',
-        'schema:dump',
-        'make:cast',
-        'queue:batches-table',
-        'queue:retry-batch',
-        'queue:clear',
-        'schedule:work',
-        'schedule:list',
-        'schedule:test',
-        'db',
-        'model:prune',
-        '_complete',
-        'completion',
-        'schedule:clear-cache',
-        'make:scope',
-        'about',
-        'model:show',
-        'docs',
-        'db:monitor',
-        'db:show',
-        'db:table',
-        'env:decrypt',
-        'env:encrypt',
-        'cache:prune-stale-tags',
-        'make:view',
-        'lang:publish',
-        'channel:list',
-        'config:show',
-        'schedule:interrupt',
-        'make:cache-table',
-        'make:class',
-        'make:enum',
-        'make:notifications-table',
-        'make:queue-batches-table',
-        'make:queue-failed-table',
-        'make:queue-table',
-        'make:session-table',
-        'make:trait',
-        'config:publish',
-        'install:api',
-        'make:interface',
-        'storage:unlink',
-        'install:broadcasting',
-        'make:job-middleware',
-        'invoke-serialized-closure',
-        'make:config',
-        'config:make',
-    ];
-
     /**
      * Show the commands.
      *
      * @return Response
      */
-    public function show($option = null)
+    public function show(Request $request, JsonListManager $jsonListManager, $option = null): View
     {
-        $options = array_keys(config('commands.commands'));
-        array_push($options, 'customs');
+        $options = [
+            "favorites",
+            "cache",
+            "config",
+            "db",
+            "env",
+            "event",
+            "install",
+            "make",
+            "migrate",
+            "optimize",
+            "queue",
+            "route",
+            "schedule",
+            "model",
+            "view",
+            "storage",
+            "misc",
+        ];
 
-        if (is_null($option)) {
+        $allCommands = collect(Artisan::all());
+
+        $favorites = collect($jsonListManager->getList());
+
+        $allCommands = $allCommands->map(function ($command) use ($favorites) {
+            $isFavorite = $favorites->contains($command->getName());
+            $command->favorite = $isFavorite;
+            return $command;
+        }); 
+
+        $search = $request->input('search');
+        if ($search) {
+            $items = $allCommands->filter(function ($command, $key) use ($search) {
+                return str_contains($key, $search);
+            })->all();
+
+            ksort($items);
+
+            return view('NiceArtisan::index', compact('items', 'options'));
+        }
+
+        if (is_null($option) || !in_array($option, $options)) {
             $option = array_values($options)[0];
         }
 
-        if (!in_array($option, $options)) {
-            abort(404);
-        }
+        $items = [];
+        $allPrefixes = collect($options)->diff(['misc', 'favorites']);
 
-        if ($option == 'customs') {
-            $items = array_diff_key(Artisan::all(), array_flip($this->coreCommands));
+        if ($option == 'misc') {
+            $items = $allCommands->filter(function ($command) use ($allPrefixes) {
+                if (!str_contains($command->getName(), ':')) {
+                    return !$allPrefixes->contains($command->getName());
+                }
+                $commandPrefix = explode(':', $command->getName())[0];
+                return !$allPrefixes->contains($commandPrefix);
+            })->all();
+        } elseif ($option == 'favorites') {
+            $items = $allCommands->filter(function ($command) {
+                return $command->favorite;
+            })->all();
         } else {
-            $items = array_intersect_key(Artisan::all(), array_flip(config('commands.commands.' . $option)));
+            $items = $allCommands->filter(function ($command) use ($option) {
+                return str_starts_with($command->getName(), $option . ':') || $command->getName() === $option;
+            })->all();
         }
 
         ksort($items);
@@ -181,7 +97,7 @@ class NiceArtisanController extends AppController
      * @param  Request  $request
      * @param  string $command
      */
-    public function command(Request $request, $command)
+    public function command(Request $request, $command): RedirectResponse
     {
         if (array_key_exists('argument_name', $request->all())) {
             $request->validate(['argument_name' => 'required']);
@@ -208,5 +124,25 @@ class NiceArtisanController extends AppController
         }
 
         return back()->with('output', Artisan::output());
+    }
+
+    /**
+     * Set a favorite
+     */
+    public function addFav(Request $request, JsonListManager $jsonListManager): JsonResponse
+    {
+        $jsonListManager->addElement($request->item);
+
+        return response()->json();
+    }
+
+    /**
+     * Remove a favorite
+     */
+    public function removeFav(Request $request, JsonListManager $jsonListManager): JsonResponse
+    {
+        $jsonListManager->removeElement($request->item);
+
+        return response()->json();
     }
 }
