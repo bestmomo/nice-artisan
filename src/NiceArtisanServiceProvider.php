@@ -17,10 +17,7 @@ class NiceArtisanServiceProvider extends ServiceProvider
     public function boot()
     {
         // Routes
-        Route::middleware(config('commands.settings.middlewares'))
-            ->group(function () {
-                $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-            });
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         // Views
         $this->loadViewsFrom(__DIR__.'/../views', 'NiceArtisan');
