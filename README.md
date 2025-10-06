@@ -72,4 +72,3 @@ Add the middleware to the `bootstrap/app.php` file:
 ### Screenshots ###
 
 ![img1](screenshots/img1.png)
-![img2](screenshots/img2.png)
