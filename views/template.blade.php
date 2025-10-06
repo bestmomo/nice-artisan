@@ -27,12 +27,12 @@
 
         <div class="container"><br>
 
-            <h1 class="center-align white-text">Nice Artisan</h1>
+            <h1 class="center-align white-text z-depth-2" style="padding-bottom: 7px">Nice Artisan</h1>
             @if(request()->has('search'))
                 <h4 class="center-align z-depth-3" style="padding: 1rem">Results for "{{ request()->search }}"</h4><br>
             @endif
             <nav>
-                <div class="nav-wrapper">
+                <div class="nav-wrapper z-depth-2">
                   <form action="{{ route('niceartisan') }}" method="GET">
                     <div class="input-field">
                       <input id="search" name="search" type="search" placeholder="Search command" required>
@@ -45,7 +45,7 @@
 
             <br>
 
-            <nav class="nav-extended">
+            <nav class="nav-extended ">
                 <div class="nav-wrapper">
                     <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="hide-on-med-and-down center-nav-links">
@@ -73,7 +73,7 @@
                     </ul>
                 </div>
                 
-                <div class="nav-wrapper hide-on-med-and-down">
+                <div class="nav-wrapper hide-on-med-and-down z-depth-2">
                     <ul id="nav-mobile" class="center-nav-links">
                         {{-- Second line --}}
                         @foreach (array_slice($options, 8) as $option)

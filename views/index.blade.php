@@ -8,7 +8,7 @@
         @endphp
         @foreach($items as $item)
             <li>
-                <div class="collapsible-header collapsible-flex">
+                <div class="collapsible-header collapsible-flex z-depth-2">
                     <span>{{ $item->getName() . ' (' . $item->getDescription() . ')' }}</span>
                     <a href="#" class="btn btn-small waves-effect waves-light fav-btn
                        @if($item->favorite) red lighten-1 @else green lighten-1 @endif"
