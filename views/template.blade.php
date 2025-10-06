@@ -23,11 +23,11 @@
     
     </head>
 
-    <body>
+    <body class="red darken-1">
 
         <div class="container"><br>
 
-            <h1 class="center-align">Nice Artisan</h1>
+            <h1 class="center-align white-text">Nice Artisan</h1>
             @if(request()->has('search'))
                 <h4 class="center-align z-depth-3" style="padding: 1rem">Results for "{{ request()->search }}"</h4><br>
             @endif
@@ -49,7 +49,7 @@
                 <div class="nav-wrapper">
                     <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="hide-on-med-and-down center-nav-links">
-                        {{-- La première rangée : affichage des 8 premiers éléments --}}
+                        {{-- First line --}}
                         @foreach (array_slice($options, 0, 8) as $key => $option)
                             @php
                                 $isActive = false;
@@ -73,9 +73,9 @@
                     </ul>
                 </div>
                 
-                <div class="nav-wrapper">
-                    <ul id="nav-mobile" class="hide-on-med-and-down center-nav-links">
-                        {{-- La deuxième rangée : affichage des éléments restants --}}
+                <div class="nav-wrapper hide-on-med-and-down">
+                    <ul id="nav-mobile" class="center-nav-links">
+                        {{-- Second line --}}
                         @foreach (array_slice($options, 8) as $option)
                             @php
                                 $isActive = false;

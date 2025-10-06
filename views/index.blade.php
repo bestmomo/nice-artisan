@@ -22,7 +22,7 @@
                     </a>
                 </div>
 
-                <div class="collapsible-body">
+                <div class="collapsible-body white">
                     <div class="row">
                         <form  class="col s12" method="POST" action="{!! route('niceartisan.exec', ['class' => $item->getName()]) !!}">
                             @csrf
