@@ -8,6 +8,7 @@
         <title>Nice Artisan</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
         <style>
             .collapsible-flex {
@@ -64,8 +65,9 @@
                                     }
                                 }
                             @endphp
-                            <li class="{{ $isActive ? 'active' : '' }}">
+                            <li class="{{ $isActive ? 'active' : '' }}">                                
                                 <a href="{!! route('niceartisan', ['option' => $option]) !!}">
+                                    @if($option == 'favorites') <i class="material-icons left">favorite</i> @else  @endif
                                     {{ ucfirst($option) }}
                                 </a>
                             </li>
@@ -106,6 +108,7 @@
                             'class="active"' : '' !!}>
                 @endif
                         <a href="{!! route('niceartisan', ['option' => $options[$i]]) !!}">
+                            @if($options[$i] == 'favorites') <i class="material-icons left">favorite</i> @else  @endif
                             {{ ucfirst($options[$i]) }}
                         </a>
                     </li>
