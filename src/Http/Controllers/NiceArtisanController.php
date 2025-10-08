@@ -13,6 +13,12 @@ use Bestmomo\NiceArtisan\JsonListManager;
 
 class NiceArtisanController
 {
+    private const COMMAND_OPTIONS = [
+        "favorites", "cache", "config", "db", "env", "event",
+        "install", "make", "migrate", "optimize", "queue",
+        "route", "schedule", "model", "view", "storage", "misc",
+    ];
+
     /**
      * Show the commands.
      *
@@ -20,25 +26,7 @@ class NiceArtisanController
      */
     public function show(Request $request, JsonListManager $jsonListManager, $option = null): View
     {
-        $options = [
-            "favorites",
-            "cache",
-            "config",
-            "db",
-            "env",
-            "event",
-            "install",
-            "make",
-            "migrate",
-            "optimize",
-            "queue",
-            "route",
-            "schedule",
-            "model",
-            "view",
-            "storage",
-            "misc",
-        ];
+        $options = self::COMMAND_OPTIONS;
 
         $allCommands = collect(Artisan::all());
 
@@ -53,7 +41,7 @@ class NiceArtisanController
         $search = $request->input('search');
         if ($search) {
             $items = $allCommands->filter(function ($command, $key) use ($search) {
-                return str_contains($key, $search);
+                return Str::contains($key, $search);
             })->all();
 
             ksort($items);
@@ -61,8 +49,8 @@ class NiceArtisanController
             return view('NiceArtisan::index', compact('items', 'options'));
         }
 
-        if (is_null($option) || !in_array($option, $options)) {
-            $option = array_values($options)[0];
+        if (!in_array($option, $options, true)) {
+            $option = self::COMMAND_OPTIONS[0];
         }
 
         $items = [];
@@ -123,7 +111,7 @@ class NiceArtisanController
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('output', Artisan::output());
+        return back()->with('output', Artisan::output())->with('status', 'success');
     }
 
     /**
