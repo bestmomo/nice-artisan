@@ -22,7 +22,10 @@ class NiceArtisanController
     /**
      * Show the commands.
      *
-     * @return Response
+     * @param Request $request
+     * @param JsonListManager $jsonListManager
+     * @param null $option
+     * @return View
      */
     public function show(Request $request, JsonListManager $jsonListManager, $option = null): View
     {
@@ -36,7 +39,7 @@ class NiceArtisanController
             $isFavorite = $favorites->contains($command->getName());
             $command->favorite = $isFavorite;
             return $command;
-        }); 
+        });
 
         $search = $request->input('search');
         if ($search) {
@@ -82,10 +85,11 @@ class NiceArtisanController
     /**
      * Call the Artisan  command
      *
-     * @param  Request  $request
-     * @param  string $command
+     * @param Request $request
+     * @param string $command
+     * @return RedirectResponse
      */
-    public function command(Request $request, $command): RedirectResponse
+    public function command(Request $request, string $command): RedirectResponse
     {
         if (array_key_exists('argument_name', $request->all())) {
             $request->validate(['argument_name' => 'required']);

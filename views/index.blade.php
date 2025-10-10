@@ -24,9 +24,19 @@
 
                 <div class="collapsible-body white">
                     <div class="row">
-                        <form  class="col s12" method="POST" action="{!! route('niceartisan.exec', ['class' => $item->getName()]) !!}">
+                        <form class="col s12" method="POST" action="{!! route('niceartisan.exec', ['class' => $item->getName()]) !!}" data-base-command="php artisan {{ $item->getName() }}">
                             @csrf
                             <input type="hidden" name="command" value="{{ $item->getName() }}">
+
+                            <div class="col s12 command-preview-container" style="margin-bottom: 20px;">
+                                <div class="card-panel grey darken-4 white-text command-output" style="word-break: break-all;">
+                                    php artisan {{ $item->getName() }}
+                                </div>
+                                <button type="button" class="btn waves-effect waves-light copy-command-btn" data-clipboard-text="" style="float: right;">
+                                    <i class="material-icons left">content_copy</i> Copy command
+                                </button>
+                            </div>
+
                             @if(count($item->getDefinition()->getArguments()) > 0)
                                 <fieldset>
                                     <legend>Arguments</legend>
@@ -62,7 +72,7 @@
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Go !</button>
                             </div>
-                        </form> 
+                        </form>
                     </div>
                 </div>
             </li>

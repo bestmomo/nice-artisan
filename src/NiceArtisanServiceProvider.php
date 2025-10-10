@@ -3,7 +3,6 @@
 namespace Bestmomo\NiceArtisan;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Route;
 use Bestmomo\NiceArtisan\Http\Middleware\EnsureAjax;
 
 class NiceArtisanServiceProvider extends ServiceProvider

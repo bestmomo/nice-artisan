@@ -13,7 +13,7 @@ class EnsureAjax
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function handle(Request $request, Closure $next, ?string $customMessage = null): Response
     {

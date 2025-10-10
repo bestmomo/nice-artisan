@@ -15,7 +15,7 @@ class JsonListManager
     /**
      * @param string $fileName
      */
-    public function __construct($fileName = 'liste.json')
+    public function __construct(string $fileName = 'liste.json')
     {
         // Set the file path in a package-specific subdirectory
         $this->filePath = 'niceartisan/' . $fileName;
@@ -79,7 +79,7 @@ class JsonListManager
      * @param mixed $element
      * @return void
      */
-    public function addElement($element): void
+    public function addElement(mixed $element): void
     {
         $liste = $this->getList();
         // Check if the element is not already in the list
@@ -95,7 +95,7 @@ class JsonListManager
      * @param mixed $element
      * @return void
      */
-    public function removeElement($element): void
+    public function removeElement(mixed $element): void
     {
         $liste = $this->getList();
         $key = array_search($element, $liste);

@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+
         <style>
             .collapsible-flex {
                 display: flex;
@@ -21,7 +21,7 @@
                 justify-content: center;
             }
         </style>
-    
+
     </head>
 
     <body class="red darken-1">
@@ -65,7 +65,7 @@
                                     }
                                 }
                             @endphp
-                            <li class="{{ $isActive ? 'active' : '' }}">                                
+                            <li class="{{ $isActive ? 'active' : '' }}">
                                 <a href="{!! route('niceartisan', ['option' => $option]) !!}">
                                     @if($option == 'favorites') <i class="material-icons left">favorite</i> @else  @endif
                                     {{ ucfirst($option) }}
@@ -74,7 +74,7 @@
                         @endforeach
                     </ul>
                 </div>
-                
+
                 <div class="nav-wrapper hide-on-med-and-down z-depth-2">
                     <ul id="nav-mobile" class="center-nav-links">
                         {{-- Second line --}}
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                 </div>
-            </div>     
+            </div>
 
             <div class="row"><br>
 
@@ -144,7 +144,7 @@
                             @endforeach
                         </div>
                       </div>
-                    </div>  
+                    </div>
                 @endif
 
                 @if (session('output'))
@@ -154,10 +154,10 @@
                             <span class="card-title">Success !</span>
                             <pre style="overflow-x: auto; white-space: pre;">
                                 {!! session('output') !!}
-                            </pre>                                                          
+                            </pre>
                         </div>
                       </div>
-                    </div>    
+                    </div>
                 @endif
 
                 @if (session('error'))
@@ -170,15 +170,15 @@
                             </pre>
                         </div>
                       </div>
-                    </div>  
+                    </div>
                 @endif
-                
+
             </div>
 
             @yield('content')
 
         </div>
-        
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
         <script>
@@ -190,7 +190,7 @@
 
                 // Get the forms
                 const searchForms = document.querySelectorAll('form');
-                
+
                 // Get all navigation links
                 const navLinks = document.querySelectorAll('#nav-mobile a, #mobile a');
 
@@ -206,12 +206,55 @@
                     form.addEventListener('submit', function(event) {
                         showPreloader();
                     });
-                });           
+                    const inputFields = form.querySelectorAll('input[type="text"], input[type="checkbox"]');
+                    inputFields.forEach(input => {
+                        input.addEventListener('input', function() {
+                            updateCommandPreview(form);
+                        });
+                        updateCommandPreview(form);
+                    });
+                });
 
                 // Attach event listeners to all navigation links
                 navLinks.forEach(link => {
                     link.addEventListener('click', function(event) {
                         showPreloader();
+                    });
+                });
+
+                // Copy command in clipboard
+                const copyButtons = document.querySelectorAll('.copy-command-btn');
+                copyButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const commandToCopy = this.getAttribute('data-clipboard-text');
+
+                        if (navigator.clipboard) {
+                            // Utilisation de l'API Clipboard moderne
+                            navigator.clipboard.writeText(commandToCopy)
+                                .then(() => {
+                                    // Feedback visuel (Materialize Toast)
+                                    M.toast({html: 'Command copied!', classes: 'green darken-1'});
+                                })
+                                .catch(err => {
+                                    console.error('Copy error:', err);
+                                    M.toast({html: 'Impossible to copy command.', classes: 'red darken-1'});
+                                });
+                        } else {
+                            // Fallback pour les anciens navigateurs
+                            const textArea = document.createElement("textarea");
+                            textArea.value = commandToCopy;
+                            document.body.appendChild(textArea);
+                            textArea.focus();
+                            textArea.select();
+                            try {
+                                document.execCommand('copy');
+                                M.toast({html: 'Command copied! (Fallback)', classes: 'green darken-1'});
+                            } catch (err) {
+                                console.error('Copy error (Fallback):', err);
+                                M.toast({html: 'Impossible to copy command.', classes: 'red darken-1'});
+                            }
+                            document.body.removeChild(textArea);
+                        }
                     });
                 });
 
@@ -255,7 +298,53 @@
                             alert('An error occurred.');
                         });
                     });
-                });                
+                });
+
+                /**
+                 * Generate command artisan with form inputs
+                 * @param {HTMLElement} formElement
+                 * @returns {string}
+                 */
+                function generateCommand(formElement) {
+                    let command = formElement.getAttribute('data-base-command');
+                    const formData = new FormData(formElement);
+
+                    // Itérer sur les entrées du formulaire
+                    for (const [key, value] of formData.entries()) {
+                        if (key.startsWith('argument_') && value) {
+                            // C'est un argument (sans guillemets car Materialize génère le champ)
+                            command += ' ' + value.trim();
+                        } else if (key.startsWith('option_')) {
+                            const optionName = key.substring('option_'.length);
+
+                            if (formElement.querySelector(`[name="${key}"][type="checkbox"]`)) {
+                                // C'est une option sans valeur (checkbox)
+                                command += ' --' + optionName;
+                            } else if (value) {
+                                // C'est une option avec valeur
+                                // On ajoute des guillemets autour de la valeur
+                                command += ' --' + optionName + '="' + value.trim().replace(/"/g, '\\"') + '"';
+                            }
+                        }
+                    }
+                    return command;
+                }
+
+                /**
+                 * Update command preview
+                 * @param {HTMLElement} formElement
+                 */
+                function updateCommandPreview(formElement) {
+
+                    const previewElement = formElement.querySelector('.command-output');
+                    const copyButton = formElement.querySelector('.copy-command-btn');
+                    if (previewElement && copyButton) {
+                        const command = generateCommand(formElement);
+                        previewElement.textContent = command;
+                        copyButton.setAttribute('data-clipboard-text', command);
+                    }
+                }
+
             });
         </script>
 

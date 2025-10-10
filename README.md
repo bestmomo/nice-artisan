@@ -2,16 +2,28 @@
 
 This package adds a web interface for Laravel.
 
+### Features
+
+Nice Artisan provides a smooth and secure way to manage your application's commands:
+
+* **Command Catalog**: browse and execute all your Laravel Artisan commands and custom commands directly from the interface.
+* **Dynamic Command Preview**: as you fill out arguments and options in the form, the full Artisan command is generated in real-time, ready to be copied to your clipboard. 
+* **Favorites System**: mark frequently used commands as favorites for quick access.
+* **Search Functionality**: Easily find any command using the built-in search feature.* 
+* **Intuitive Forms**: automatically generates form fields for all required arguments and optional options (including checkboxes for flags). 
+* **Security Focused**: mandatory middleware configuration is provided to protect the interface, especially in production environments.
+
 ### New in V2 ###
 
-- Added favorites
-- Added commands search
-- Cleaned options
+* Added a **real-time command** preview feature.
+* Added **favorites** functionality.
+* Added **commands search**.
+* Cleaned and simplified options forms.
 
 
 ### Quick Installation ###
 
-Add Nice Artisan to your composer.json file :
+Add Nice Artisan to your **composer.json** file :
 ```
     composer require bestmomo/nice-artisan
 ```
@@ -21,16 +33,16 @@ It will now be accessible at the following URL:
     .../niceartisan
 ```
 
-### Middleware ###
+### Middleware (security) ###
 
-If you want to use this package on a production application you must protect the urls with a middleware for your security !
+If you want to use this package on a production application, **you must protect the urls with a middleware** for your security !
 
 To add a middleware for the package publish the configuration:
 ```
 php artisan vendor:publish --tag=niceartisan:config
 ```
 
-Add a route middleware to your application, for example :
+You can now define your protection logic. Add a route middleware to your application, for example:
 
 ```
 <?php
@@ -41,7 +53,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;  
 
-class NiceArtisan
+class NiceArtisanProtection
 {
   /**
   * Handle an incoming request.
@@ -50,10 +62,18 @@ class NiceArtisan
   */
   public function handle(Request $request, Closure $next): Response
   {
-    if (** your logical here **)
+    // EXAMPLE: Only allow access in 'local' environment
+    if (app()->isProduction()) 
     {
-      abort(403);
+      abort(403, 'Nice Artisan is not allowed in production.');
     }
+    
+    // OR: Check if the user is authenticated and is an admin
+    // if (! auth()->check() || ! auth()->user()->isAdmin())
+    // {
+    //   abort(403);
+    // }
+
     return $next($request);
   }
 }
