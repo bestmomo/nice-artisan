@@ -147,30 +147,28 @@
                     </div>
                 @endif
 
-                @if (session('output'))
-                    <div class="col s12">
-                      <div class="card green darken-1">
-                        <div class="card-content white-text">
-                            <span class="card-title">Success !</span>
-                            <pre style="overflow-x: auto; white-space: pre;">
-                                {!! session('output') !!}
-                            </pre>
+                @if (isset($commandResult))
+                    @if ($commandResult['type'] === 'success')
+                        <div class="col s12">
+                            <div class="card green darken-1">
+                                <div class="card-content white-text">
+                                    <span class="card-title">Success !</span>
+                                    <small>Command: {{ $commandResult['command'] }} at {{ $commandResult['timestamp'] }}</small>
+                                    <pre style="overflow-x: auto; white-space: pre-wrap;">{!! $commandResult['output'] !!}</pre>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                @endif
-
-                @if (session('error'))
-                    <div class="col s12">
-                      <div class="card red accent-4">
-                        <div class="card-content white-text">
-                            <span class="card-title">Error !</span>
-                            <pre style="overflow-x: auto; white-space: pre;">
-                                {!! session('error') !!}
-                            </pre>
+                    @elseif ($commandResult['type'] === 'error')
+                        <div class="col s12">
+                            <div class="card red accent-4">
+                                <div class="card-content white-text">
+                                    <span class="card-title">Error !</span>
+                                    <small>Command: {{ $commandResult['command'] }} at {{ $commandResult['timestamp'] }}</small>
+                                    <pre style="overflow-x: auto; white-space: pre-wrap;">{!! $commandResult['error'] !!}</pre>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
+                    @endif
                 @endif
 
             </div>
