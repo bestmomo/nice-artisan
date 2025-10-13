@@ -99,6 +99,26 @@
                                     @endforeach
                                 </fieldset>
                             @endif
+                            @if(isset($globalOptions) && !empty($globalOptions))
+                                <fieldset>
+                                    <legend>Global options</legend>
+                                    @foreach($globalOptions as $globalOption)
+                                        @if($globalOption['type'] === 'checkbox')
+                                            <p>
+                                                <label>
+                                                    <input type="checkbox" name="option_{{ $globalOption['name'] }}">
+                                                    <span>{{ $globalOption['name'] }} ({{ $globalOption['description'] }})</span>
+                                                </label>
+                                            </p>
+                                        @elseif($globalOption['type'] === 'text')
+                                            <div class="input-field">
+                                                <input type="text" name="option_{{ $globalOption['name'] }}">
+                                                <label>--{{ $globalOption['name'] }} ({{ $globalOption['description'] }})</label>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </fieldset>
+                            @endif
                             <br>
                             <div class="col s12 center-align">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Go !</button>

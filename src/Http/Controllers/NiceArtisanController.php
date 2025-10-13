@@ -23,6 +23,11 @@ class NiceArtisanController
         "schedule", "model", "view", "storage", "misc",
     ];
 
+    private const GLOBAL_OPTIONS = [
+        ['name' => 'verbose', 'description' => 'Increases verbosity (1 niveau)', 'type' => 'checkbox'],
+        ['name' => 'env', 'description' => 'Specifies the environment', 'type' => 'text'],
+    ];
+
     /**
      * Display Artisan commands with filtering and favorites support.
      *
@@ -107,7 +112,9 @@ class NiceArtisanController
 
         ksort($items);
 
-        return view('NiceArtisan::index', compact('items', 'options', 'commandResult'));
+        $globalOptions = self::GLOBAL_OPTIONS;
+
+        return view('NiceArtisan::index', compact('items', 'options', 'commandResult', 'globalOptions'));
     }
 
     /**
@@ -140,6 +147,8 @@ class NiceArtisanController
                 $params[$name] = $value;
             }
         }
+
+        //dd($params);
 
         $blockedCommands = [
             'docs' => 'This command opens documentation in a browser and blocks execution.',
