@@ -2,6 +2,7 @@
 
 namespace Bestmomo\NiceArtisan\Http\Controllers;
 
+use Bestmomo\NiceArtisan\CommandDocumentationLoader;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
@@ -31,10 +32,11 @@ class NiceArtisanController
      *
      * @param Request $request The HTTP request containing search and filter parameters
      * @param JsonListManager $jsonListManager Service for managing favorite commands
+     * @param CommandDocumentationLoader $docsLoader Service for managing documentation commands
      * @param string|null $option Optional category filter for commands (e.g., 'migrate', 'cache')
      * @return View Returns a view with filtered commands, options, and command results
      */
-    public function show(Request $request, JsonListManager $jsonListManager, $option = null): View
+    public function show(Request $request, JsonListManager $jsonListManager, CommandDocumentationLoader $docsLoader, $option = null): View
     {
         $commandResult = null;
         if (Storage::disk('local')->exists('niceartisan/temp.json')) {
@@ -59,9 +61,12 @@ class NiceArtisanController
 
         $favorites = collect($jsonListManager->getList());
 
-        $allCommands = $allCommands->map(function ($command) use ($favorites) {
+        $allCommands = $allCommands->map(function ($command) use ($favorites, $docsLoader) {
             $isFavorite = $favorites->contains($command->getName());
+            $hasDoc = $docsLoader->get($command->getName()) !== null;
+
             $command->favorite = $isFavorite;
+            $command->doc = $hasDoc;
             return $command;
         });
 
@@ -244,5 +249,23 @@ class NiceArtisanController
         $jsonListManager->removeElement($request->item);
 
         return response()->json();
+    }
+
+    public function showCommandDocs(string $command, CommandDocumentationLoader $docsLoader)
+    {
+        $documentation = $docsLoader->get($command);
+
+        if (!$documentation) {
+            return response()->json([
+                'error' => 'Documentation not found'
+            ], 404);
+        }
+
+        // Retourner en JSON pour AJAX
+        return response()->json([
+            'command' => $command,
+            'html' => $documentation['html'],
+            'metadata' => $documentation['metadata']
+        ]);
     }
 }

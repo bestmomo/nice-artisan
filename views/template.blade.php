@@ -9,19 +9,50 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css">
         <style>
-            .collapsible-flex {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
             .center-nav-links {
                 display: flex;
                 justify-content: center;
             }
-        </style>
+            /* SURCHARGE DES TABLEAUX POUR UN LOOK MATERIAL DESIGN */
 
+            /* 1. Conteneur principal du tableau */
+            #docs-content.markdown-body table {
+                border-collapse: collapse;
+                width: 100%;
+                margin: 1.5em 0;
+                /* Ajoute une ombre légère pour "élever" le tableau (Material Design) */
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                border-radius: 4px; /* Coins légèrement arrondis */
+                overflow: hidden; /* Important pour que les coins arrondis fonctionnent bien */
+            }
+
+            /* 2. Cellules et entêtes */
+            #docs-content.markdown-body th,
+            #docs-content.markdown-body td {
+                padding: 12px 15px;
+                text-align: left;
+                border: none; /* Supprime les bordures conflictuelles de GitHub CSS */
+                /* Ligne de séparation horizontale douce */
+                border-bottom: 1px solid #eeeeee;
+            }
+
+            /* 3. Style de l'en-tête du tableau (TH) */
+            #docs-content.markdown-body th {
+                /* Couleur d'arrière-plan Materialize douce (Teal Lighten-5) */
+                background-color: #e0f2f1;
+                color: #424242;
+                font-weight: 600;
+                text-transform: uppercase;
+                font-size: 0.9em;
+            }
+
+            /* 4. Retirer la ligne sous la dernière rangée pour une finition propre */
+            #docs-content.markdown-body tr:last-child td {
+                border-bottom: none;
+            }
+        </style>
     </head>
 
     <body class="red darken-1">
@@ -344,6 +375,55 @@
                 }
 
             });
+
+            // Manage documentation buttons click
+            document.querySelectorAll('.docs-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    var commandName = this.getAttribute('data-command');
+                    loadCommandDocumentation(commandName);
+                });
+            });
+
+            function loadCommandDocumentation(commandName) {
+                var progress = document.querySelector('#docs-modal .progress');
+                var docsContent = document.getElementById('docs-content');
+
+                progress.style.display = 'block';
+                docsContent.innerHTML = '';
+                document.getElementById('docs-modal-title').textContent = 'Documentation: ' + commandName;
+
+                // Request AJAX
+                fetch('/niceartisan/commands/' + commandName + '/docs', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Documentation not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    progress.style.display = 'none';
+                    if (data.html) {
+                        docsContent.innerHTML = data.html;
+                    } else {
+                        docsContent.innerHTML = '<p>No documentation available for this command.</p>';
+                    }
+                })
+                .catch(error => {
+                    progress.style.display = 'none';
+                    docsContent.innerHTML = `
+            <div class="card-panel red lighten-4 red-text">
+                <i class="material-icons left">error</i>
+                Error loading documentation: ${error.message}
+            </div>
+            `;
+                });
+            }
         </script>
 
     </body>

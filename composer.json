@@ -3,6 +3,7 @@
   "description": "Web interface for Laravel Artisan",
   "homepage": "http://github.com/bestmomo/nice-artisan",
   "license": "MIT",
+  "version": "2.1.2",
   "authors": [
     {
       "name": "Bestmomo",
@@ -12,7 +13,8 @@
   ],
   "require": {
     "php": ">=8.2",
-    "illuminate/support": "^12.0"
+    "illuminate/support": "^12.0",
+    "league/commonmark": "^2.7"
   },
   "autoload": {
     "psr-4": {
@@ -25,5 +27,7 @@
         "Bestmomo\\NiceArtisan\\NiceArtisanServiceProvider"
       ]
     }
-  }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }

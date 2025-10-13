@@ -1,25 +1,38 @@
-## Nice Artisan ##
+## Nice Artisan: A Web Interface for Laravel Commands 🚀 ##
 
-This package adds a web interface for Laravel.
+This package provides a smooth, secure, and insightful web interface for managing and executing your Laravel application's Artisan commands.
+
+---
 
 ### Features
 
-Nice Artisan provides a smooth and secure way to manage your application's commands:
+Nice Artisan provides a secure and informative way to manage your application's commands:
 
-* **Command Catalog**: browse and execute all your Laravel Artisan commands and custom commands directly from the interface.
-* **Dynamic Command Preview**: as you fill out arguments and options in the form, the full Artisan command is generated in real-time, ready to be copied to your clipboard. 
-* **Favorites System**: mark frequently used commands as favorites for quick access.
-* **Search Functionality**: Easily find any command using the built-in search feature.* 
-* **Intuitive Forms**: automatically generates form fields for all required arguments and optional options (including checkboxes for flags). 
-* **Security Focused**: mandatory middleware configuration is provided to protect the interface, especially in production environments.
+* **Command Catalog & Documentation (New!):** Browse all your Laravel core commands and custom commands. **Each command now includes integrated documentation**, offering a quick, didactic reference right where you need it.
+* **Dynamic Execution Forms:** Automatically generates intuitive form fields for all required arguments and optional options (including checkboxes for flags).
+* **Real-Time Command Preview:** As you fill out the form fields, the full `php artisan ...` command is **generated and displayed in real-time**, ready to be copied to your clipboard.
+* **Favorites System:** Mark frequently used commands as favorites for quick access and streamlined workflow.
+* **Search Functionality:** Easily find any command or filter by command type using the built-in search feature.
+* **Security Focused:** Mandatory middleware configuration is required to protect the interface, especially in production environments.
 
-### New in V2 ###
+---
 
-* Added a **real-time command** preview feature.
-* Added **favorites** functionality.
-* Added **commands search**.
-* Cleaned and simplified options forms.
+### New in V2: more power, more clarity, more learning
 
+Version 2.0 transforms Nice Artisan into an even more powerful and didactic tool:
+
+* **Integrated Command Documentation:** Now features built-in reference guides for every discoverable command, making it a valuable **learning and auditing tool**.
+* **Real-Time Command Generation:** The dynamic preview is now faster and more accurate.
+* **Favorites System:** Added the highly requested functionality to bookmark commands.
+* **Enhanced Command Search:** Improved search speed and accuracy.
+* **Simplified UI:** Options forms have been cleaned and simplified for better usability.
+
+
+### Command Documentation ###
+
+Command documentation files are located in the `resources/commands` directory. Any contributions via pull requests to improve this documentation are welcome.
+
+---
 
 ### Quick Installation ###
 
@@ -89,6 +102,8 @@ Add the middleware to the `bootstrap/app.php` file:
 })
 ```
 
+---
 ### Screenshots ###
 
 ![img1](screenshots/img1.png)
+![img2](screenshots/img2.png)

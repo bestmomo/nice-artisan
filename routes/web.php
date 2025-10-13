@@ -27,6 +27,8 @@ Route::middleware($middlewares)->group(function () {
                 ->name('niceartisan.addFav');
             Route::post('removefav/{item}', '\Bestmomo\NiceArtisan\Http\Controllers\NiceArtisanController@removeFav')
                 ->name('niceartisan.removeFav');
+            Route::get('commands/{command}/docs', '\Bestmomo\NiceArtisan\Http\Controllers\NiceArtisanController@showCommandDocs')
+                ->name('niceartisan.command.docs');
         });
     });
 });
