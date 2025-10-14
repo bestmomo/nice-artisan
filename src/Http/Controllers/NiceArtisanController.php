@@ -259,7 +259,14 @@ class NiceArtisanController
         return response()->json();
     }
 
-    public function showCommandDocs(string $command, CommandDocumentationLoader $docsLoader)
+    /**
+     * Get the documentation for a command.
+     *
+     * @param string $command The name of the Artisan command
+     * @param CommandDocumentationLoader $commandDocumentationLoader Service for managing commands documentation
+     * @return JsonResponse JSON response indicating success
+     */
+    public function showCommandDocs(string $command, CommandDocumentationLoader $docsLoader): JsonResponse
     {
         $documentation = $docsLoader->get($command);
 
