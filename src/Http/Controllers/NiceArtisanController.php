@@ -147,8 +147,6 @@ class NiceArtisanController
             }
         }
 
-        //dd($params);
-
         $blockedCommands = [
             'docs' => 'This command opens documentation in a browser and blocks execution.',
             'serve' => 'This command starts a web server and blocks execution.',
