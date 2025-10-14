@@ -61,6 +61,7 @@ class NiceArtisanController
         }
 
         $options = self::COMMAND_OPTIONS;
+        $globalOptions = self::GLOBAL_OPTIONS;
 
         $allCommands = collect(Artisan::all());
 
@@ -83,7 +84,7 @@ class NiceArtisanController
 
             ksort($items);
 
-            return view('NiceArtisan::index', compact('items', 'options', 'commandResult'));
+            return view('NiceArtisan::index', compact('items', 'options', 'commandResult', 'globalOptions'));
         }
 
         if (!in_array($option, $options, true)) {
@@ -111,8 +112,6 @@ class NiceArtisanController
         }
 
         ksort($items);
-
-        $globalOptions = self::GLOBAL_OPTIONS;
 
         return view('NiceArtisan::index', compact('items', 'options', 'commandResult', 'globalOptions'));
     }
