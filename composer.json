@@ -3,7 +3,7 @@
   "description": "Web interface for Laravel Artisan",
   "homepage": "http://github.com/bestmomo/nice-artisan",
   "license": "MIT",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "authors": [
     {
       "name": "Bestmomo",
