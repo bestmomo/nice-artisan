@@ -121,7 +121,7 @@
                             @endif
                             <br>
                             <div class="col s12 center-align">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Go !</button>
+                                <button class="btn waves-effect waves-light" type="submit">Go !</button>
                             </div>
                         </form>
                     </div>

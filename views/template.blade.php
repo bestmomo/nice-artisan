@@ -338,20 +338,15 @@
                     let command = formElement.getAttribute('data-base-command');
                     const formData = new FormData(formElement);
 
-                    // Itérer sur les entrées du formulaire
                     for (const [key, value] of formData.entries()) {
                         if (key.startsWith('argument_') && value) {
-                            // C'est un argument (sans guillemets car Materialize génère le champ)
                             command += ' ' + value.trim();
                         } else if (key.startsWith('option_')) {
                             const optionName = key.substring('option_'.length);
-
                             if (formElement.querySelector(`[name="${key}"][type="checkbox"]`)) {
-                                // C'est une option sans valeur (checkbox)
-                                command += ' --' + optionName;
+                                const shortOptions = ['v', 'vv', 'vvv'];
+                                command += shortOptions.includes(optionName) ? ` -${optionName}` : ` --${optionName}`;
                             } else if (value) {
-                                // C'est une option avec valeur
-                                // On ajoute des guillemets autour de la valeur
                                 command += ' --' + optionName + '="' + value.trim().replace(/"/g, '\\"') + '"';
                             }
                         }
