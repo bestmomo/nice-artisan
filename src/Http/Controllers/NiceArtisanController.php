@@ -132,12 +132,14 @@ class NiceArtisanController
      */
     public function command(Request $request, string $command): RedirectResponse
     {
-        if (array_key_exists('argument_name', $request->all())) {
-            $request->validate(['argument_name' => 'required']);
-        }
+        if (!$request->filled('option_help')) {
+            if (array_key_exists('argument_name', $request->all())) {
+                $request->validate(['argument_name' => 'required']);
+            }
 
-        if (array_key_exists('argument_id', $request->all())) {
-            $request->validate(['argument_id' => 'required']);
+            if (array_key_exists('argument_id', $request->all())) {
+                $request->validate(['argument_id' => 'required']);
+            }
         }
 
         $inputs = $request->except('_token', 'command');
