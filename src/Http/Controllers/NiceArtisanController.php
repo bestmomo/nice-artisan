@@ -24,8 +24,11 @@ class NiceArtisanController
     ];
 
     private const GLOBAL_OPTIONS = [
-        ['name' => 'verbose', 'description' => 'Increases verbosity (1 niveau)', 'type' => 'checkbox'],
-        ['name' => 'env', 'description' => 'Specifies the environment', 'type' => 'text'],
+        ['name' => 'v', 'description' => 'Increase the verbosity of messages (normal output)', 'type' => 'checkbox'],
+        ['name' => 'vv', 'description' => 'Increase the verbosity of messages (more verbose output)', 'type' => 'checkbox'],
+        ['name' => 'vvv', 'description' => 'Increase the verbosity of messages (debug)', 'type' => 'checkbox'],
+        ['name' => 'help', 'description' => 'Display help for the given command', 'type' => 'checkbox'],
+        ['name' => 'env', 'description' => 'The environment the command should run under', 'type' => 'text'],
     ];
 
     /**
@@ -138,11 +141,32 @@ class NiceArtisanController
         }
 
         $inputs = $request->except('_token', 'command');
-
         $params = [];
+
+        $shortGlobalOptionNames = collect(self::GLOBAL_OPTIONS)
+            ->filter(fn($opt) => strlen($opt['name']) === 1)
+            ->pluck('name')
+            ->toArray();
+
         foreach ($inputs as $key => $value) {
-            if ($value != '') {
-                $name = Str::startsWith($key, 'argument') ? substr($key, 9) : '--' . substr($key, 7);
+            if ($value !== '') {
+                if (Str::startsWith($key, 'argument_')) {
+                    $name = substr($key, 9);
+                } else {
+                    $optionName = substr($key, 7);
+                    $isShortOption = false;
+                    foreach ($shortGlobalOptionNames as $shortName) {
+                        if (Str::startsWith($optionName, $shortName)) {
+                            $isShortOption = true;
+                            break;
+                        }
+                    }
+                    if ($isShortOption) {
+                        $name = '-' . $optionName;
+                    } else {
+                        $name = '--' . $optionName;
+                    }
+                }
                 $params[$name] = $value;
             }
         }
