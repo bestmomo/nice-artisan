@@ -15,32 +15,25 @@
                 display: flex;
                 justify-content: center;
             }
-            /* SURCHARGE DES TABLEAUX POUR UN LOOK MATERIAL DESIGN */
 
-            /* 1. Conteneur principal du tableau */
             #docs-content.markdown-body table {
                 border-collapse: collapse;
                 width: 100%;
                 margin: 1.5em 0;
-                /* Ajoute une ombre légère pour "élever" le tableau (Material Design) */
                 box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-                border-radius: 4px; /* Coins légèrement arrondis */
-                overflow: hidden; /* Important pour que les coins arrondis fonctionnent bien */
+                border-radius: 4px;
+                overflow: hidden;
             }
 
-            /* 2. Cellules et entêtes */
             #docs-content.markdown-body th,
             #docs-content.markdown-body td {
                 padding: 12px 15px;
                 text-align: left;
-                border: none; /* Supprime les bordures conflictuelles de GitHub CSS */
-                /* Ligne de séparation horizontale douce */
+                border: none;
                 border-bottom: 1px solid #eeeeee;
             }
 
-            /* 3. Style de l'en-tête du tableau (TH) */
             #docs-content.markdown-body th {
-                /* Couleur d'arrière-plan Materialize douce (Teal Lighten-5) */
                 background-color: #e0f2f1;
                 color: #424242;
                 font-weight: 600;
@@ -48,7 +41,6 @@
                 font-size: 0.9em;
             }
 
-            /* 4. Retirer la ligne sous la dernière rangée pour une finition propre */
             #docs-content.markdown-body tr:last-child td {
                 border-bottom: none;
             }
@@ -59,7 +51,9 @@
 
         <div class="container"><br>
 
-            <h1 class="center-align white-text z-depth-2" style="padding-bottom: 7px">Nice Artisan</h1>
+            <h1 class="center-align white-text z-depth-2" style="padding-bottom: 7px">
+                <a class="white-text" href="{{ route('niceartisan') }}">Nice Artisan</a>
+            </h1>
             @if(request()->has('search'))
                 <h4 class="center-align z-depth-3" style="padding: 1rem">Results for "{{ request()->search }}"</h4><br>
             @endif
@@ -97,10 +91,23 @@
                                 }
                             @endphp
                             <li class="{{ $isActive ? 'active' : '' }}">
-                                <a href="{!! route('niceartisan', ['option' => $option]) !!}">
-                                    @if($option == 'favorites') <i class="material-icons left">favorite</i> @else  @endif
-                                    {{ ucfirst($option) }}
-                                </a>
+                                @if($option == 'history')
+                                    @if($itemsHistory)
+                                        <a href="{!! route('niceartisan', ['option' => $option]) !!}">
+                                            <i class="material-icons left">refresh</i>
+                                            {{ ucfirst($option) }}
+                                        </a>
+                                    @endif
+                                @elseif($option == 'favorites')
+                                    <a href="{!! route('niceartisan', ['option' => $option]) !!}">
+                                        <i class="material-icons left">favorite</i>
+                                        {{ ucfirst($option) }}
+                                    </a>
+                                @else
+                                    <a href="{!! route('niceartisan', ['option' => $option]) !!}">
+                                        {{ ucfirst($option) }}
+                                    </a>
+                                @endif
                             </li>
                         @endforeach
                     </ul>
@@ -223,6 +230,9 @@
                 // Get all navigation links
                 const navLinks = document.querySelectorAll('#nav-mobile a, #mobile a');
 
+                // Get all history links
+                const historyLinks = document.querySelectorAll('.secondary-content');
+
                 // Function to show the preloader and hide content
                 function showPreloader() {
                     const contentToHide = document.querySelectorAll('.container > .row, .container > .collapsible, .container > .collection');
@@ -232,7 +242,7 @@
 
                 // Attach event listener to the forms
                 searchForms.forEach(form => {
-                    form.addEventListener('submit', function(event) {
+                    form.addEventListener('submit', function() {
                         showPreloader();
                     });
                     const inputFields = form.querySelectorAll('input[type="text"], input[type="checkbox"]');
@@ -246,7 +256,14 @@
 
                 // Attach event listeners to all navigation links
                 navLinks.forEach(link => {
-                    link.addEventListener('click', function(event) {
+                    link.addEventListener('click', function() {
+                        showPreloader();
+                    });
+                });
+
+                // Attach event listeners to all history links
+                historyLinks.forEach(link => {
+                    link.addEventListener('click', function() {
                         showPreloader();
                     });
                 });
@@ -258,10 +275,8 @@
                         const commandToCopy = this.getAttribute('data-clipboard-text');
 
                         if (navigator.clipboard) {
-                            // Utilisation de l'API Clipboard moderne
                             navigator.clipboard.writeText(commandToCopy)
                                 .then(() => {
-                                    // Feedback visuel (Materialize Toast)
                                     M.toast({html: 'Command copied!', classes: 'green darken-1'});
                                 })
                                 .catch(err => {
@@ -269,7 +284,6 @@
                                     M.toast({html: 'Impossible to copy command.', classes: 'red darken-1'});
                                 });
                         } else {
-                            // Fallback pour les anciens navigateurs
                             const textArea = document.createElement("textarea");
                             textArea.value = commandToCopy;
                             document.body.appendChild(textArea);
@@ -277,9 +291,9 @@
                             textArea.select();
                             try {
                                 document.execCommand('copy');
-                                M.toast({html: 'Command copied! (Fallback)', classes: 'green darken-1'});
+                                M.toast({html: 'Command copied!', classes: 'green darken-1'});
                             } catch (err) {
-                                console.error('Copy error (Fallback):', err);
+                                console.error('Copy error:', err);
                                 M.toast({html: 'Impossible to copy command.', classes: 'red darken-1'});
                             }
                             document.body.removeChild(textArea);
@@ -343,6 +357,7 @@
                             command += ' ' + value.trim();
                         } else if (key.startsWith('option_')) {
                             const optionName = key.substring('option_'.length);
+
                             if (formElement.querySelector(`[name="${key}"][type="checkbox"]`)) {
                                 const shortOptions = ['v', 'vv', 'vvv'];
                                 command += shortOptions.includes(optionName) ? ` -${optionName}` : ` --${optionName}`;
@@ -361,22 +376,24 @@
                 function updateCommandPreview(formElement) {
 
                     const previewElement = formElement.querySelector('.command-output');
+                    const previewInput = formElement.querySelector('#previewInput');
                     const copyButton = formElement.querySelector('.copy-command-btn');
                     if (previewElement && copyButton) {
                         const command = generateCommand(formElement);
                         previewElement.textContent = command;
+                        previewInput.value = command;
                         copyButton.setAttribute('data-clipboard-text', command);
                     }
                 }
 
-            });
-
-            // Manage documentation buttons click
-            document.querySelectorAll('.docs-btn').forEach(function(btn) {
-                btn.addEventListener('click', function(e) {
-                    var commandName = this.getAttribute('data-command');
-                    loadCommandDocumentation(commandName);
+                // Manage documentation buttons click
+                document.querySelectorAll('.docs-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        var commandName = this.getAttribute('data-command');
+                        loadCommandDocumentation(commandName);
+                    });
                 });
+
             });
 
             function loadCommandDocumentation(commandName) {

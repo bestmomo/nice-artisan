@@ -3,6 +3,7 @@
 namespace Bestmomo\NiceArtisan\Http\Controllers;
 
 use Bestmomo\NiceArtisan\CommandDocumentationLoader;
+use Bestmomo\NiceArtisan\HistoryManager;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
@@ -18,8 +19,8 @@ use Throwable;
 class NiceArtisanController
 {
     private const COMMAND_OPTIONS = [
-        "favorites", "cache", "config", "db", "env", "event",
-        "make", "migrate", "optimize", "queue","route",
+        "favorites", "history", "cache", "config", "db", "env",
+        "event", "make", "migrate", "queue","route",
         "schedule", "model", "view", "storage", "misc",
     ];
 
@@ -36,7 +37,7 @@ class NiceArtisanController
      *
      * This method retrieves all available Artisan commands, applies filtering based on
      * search terms or command categories, and displays them in a web interface.
-     * It also handles temporary command results and manages favorite commands.
+     * It also handles temporary command results and manages favorite and history commands.
      *
      * @param Request $request The HTTP request containing search and filter parameters
      * @param JsonListManager $jsonListManager Service for managing favorite commands
@@ -44,9 +45,10 @@ class NiceArtisanController
      * @param string|null $option Optional category filter for commands (e.g., 'migrate', 'cache')
      * @return View Returns a view with filtered commands, options, and command results
      */
-    public function show(Request $request, JsonListManager $jsonListManager, CommandDocumentationLoader $docsLoader, $option = null): View
+    public function show(Request $request, JsonListManager $jsonListManager, HistoryManager $historyManager, CommandDocumentationLoader $docsLoader, $option = null): View
     {
         $commandResult = null;
+
         if (Storage::disk('local')->exists('niceartisan/temp.json')) {
             $content = Storage::disk('local')->get('niceartisan/temp.json');
             $fileData = json_decode($content, true);
@@ -79,44 +81,54 @@ class NiceArtisanController
             return $command;
         });
 
-        $search = $request->input('search');
-        if ($search) {
-            $items = $allCommands->filter(function ($command, $key) use ($search) {
-                return Str::contains($key, $search);
-            })->all();
-
-            ksort($items);
-
-            return view('NiceArtisan::index', compact('items', 'options', 'commandResult', 'globalOptions'));
-        }
-
         if (!in_array($option, $options, true)) {
             $option = self::COMMAND_OPTIONS[0];
         }
 
-        $allPrefixes = collect($options)->diff(['misc', 'favorites']);
+        $itemsHistory = $historyManager->getList();
 
-        if ($option == 'misc') {
-            $items = $allCommands->filter(function ($command) use ($allPrefixes) {
-                if (!str_contains($command->getName(), ':')) {
-                    return !$allPrefixes->contains($command->getName());
-                }
-                $commandPrefix = explode(':', $command->getName())[0];
-                return !$allPrefixes->contains($commandPrefix);
-            })->all();
-        } elseif ($option == 'favorites') {
-            $items = $allCommands->filter(function ($command) {
-                return $command->favorite;
+        $search = $request->input('search');
+
+        if ($search) {
+            $items = $allCommands->filter(function ($command, $key) use ($search) {
+                return Str::contains($key, $search);
             })->all();
         } else {
-            $items = $allCommands->filter(function ($command) use ($option) {
-                return str_starts_with($command->getName(), $option . ':') || $command->getName() === $option;
-            })->all();
+
+            $allPrefixes = collect($options)->diff(['misc', 'favorites']);
+
+            $items = [];
+
+            if ($option != 'history') {
+                if ($option == 'misc') {
+                    $items = $allCommands->filter(function ($command) use ($allPrefixes) {
+                        if (!str_contains($command->getName(), ':')) {
+                            return !$allPrefixes->contains($command->getName());
+                        }
+                        $commandPrefix = explode(':', $command->getName())[0];
+                        return !$allPrefixes->contains($commandPrefix);
+                    })->all();
+                } elseif ($option == 'favorites') {
+                    $items = $allCommands->filter(function ($command) {
+                        return $command->favorite;
+                    })->all();
+                } else {
+                    $items = $allCommands->filter(function ($command) use ($option) {
+                        return str_starts_with($command->getName(), $option . ':') || $command->getName() === $option;
+                    })->all();
+                }
+            }
         }
 
         ksort($items);
 
-        return view('NiceArtisan::index', compact('items', 'options', 'commandResult', 'globalOptions'));
+        return view('NiceArtisan::index', compact(
+            'items',
+            'itemsHistory',
+            'options',
+            'option',
+            'commandResult',
+            'globalOptions'));
     }
 
     /**
@@ -130,7 +142,7 @@ class NiceArtisanController
      * @param string $command The name of the Artisan command to execute
      * @return RedirectResponse Redirects back with command execution results
      */
-    public function command(Request $request, string $command): RedirectResponse
+    public function command(Request $request, HistoryManager $historyManager, string $command): RedirectResponse
     {
         if (!$request->filled('option_help')) {
             if (array_key_exists('argument_name', $request->all())) {
@@ -142,7 +154,7 @@ class NiceArtisanController
             }
         }
 
-        $inputs = $request->except('_token', 'command');
+        $inputs = $request->except('_token', 'command', 'preview');
         $params = [];
 
         $shortGlobalOptionNames = collect(self::GLOBAL_OPTIONS)
@@ -198,6 +210,8 @@ class NiceArtisanController
             $output = new BufferedOutput();
             Artisan::call($command, $params, $output);
             $outputContent = $output->fetch();
+
+            $historyManager->recordHistory($command, $request->preview, $params);
 
             $data = [
                 'type' => 'success',
@@ -306,5 +320,72 @@ class NiceArtisanController
             'html' => $documentation['html'],
             'metadata' => $documentation['metadata']
         ]);
+    }
+
+    /**
+     * Replay a command from the history list.
+     *
+     * @param Request $request The HTTP request containing the id of the command to replay
+     * @param HistoryManager $historyManager
+     * @return RedirectResponse
+     */
+    public function replay(Request $request, HistoryManager $historyManager): RedirectResponse
+    {
+        $item = $historyManager->getElement($request->id);
+
+        try {
+            $output = new BufferedOutput();
+            Artisan::call($item['command_name'], $item['input_data'], $output);
+            $outputContent = $output->fetch();
+
+            $data = [
+                'type' => 'success',
+                'output' => $outputContent,
+                'command' => $item['command_name'],
+                'timestamp' => now()->format('H:i:s')
+            ];
+
+            Storage::disk('local')->put('niceartisan/temp.json', json_encode($data));
+            return back();
+
+        } catch (Throwable $e) {
+            $errorMessage = $this->getUserFriendlyError($e, $item['command_name']);
+
+            $data = [
+                'type' => 'error',
+                'error' => $errorMessage,
+                'command' => $item['command_name'],
+                'timestamp' => now()->format('H:i:s')
+            ];
+
+            Storage::disk('local')->put('niceartisan/temp.json', json_encode($data));
+            return back();
+        }
+    }
+
+    /**
+     * Clean the history list.
+     *
+     * @param HistoryManager $historyManager
+     * @return RedirectResponse
+     */
+    public function cleanHistory(HistoryManager $historyManager): RedirectResponse
+    {
+        $historyManager->clearList();
+
+        return redirect()->route('niceartisan');
+    }
+
+    /**
+     * Clean the favorites list.
+     *
+     * @param JsonListManager $jsonListManager
+     * @return RedirectResponse
+     */
+    public function cleanFavorites(JsonListManager $jsonListManager): RedirectResponse
+    {
+        $jsonListManager->clearList();
+
+        return redirect()->route('niceartisan');
     }
 }

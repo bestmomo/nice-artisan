@@ -10,7 +10,7 @@ class JsonListManager
      *
      * @var string
      */
-    protected $filePath;
+    protected string $filePath;
 
     /**
      * @param string $fileName
@@ -56,7 +56,7 @@ class JsonListManager
             $contenuJson = Storage::disk('local')->get($this->filePath);
             $liste = json_decode($contenuJson, true);
             return is_array($liste) ? $liste : [];
-        } catch (Exception $e) {
+        } catch (Exception) {
             return [];
         }
     }
