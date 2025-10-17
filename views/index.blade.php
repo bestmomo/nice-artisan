@@ -50,7 +50,7 @@
                 </a>
             </div>
         @else
-            @if($option = 'favorites' && empty($items))
+            @if($option == 'favorites' && empty($items))
                 <div class="row">
                     <div class="card teal z-depth-2">
                         <div class="card-content white-text center-align">
@@ -123,17 +123,17 @@
                                     @if(count($item->getDefinition()->getOptions()) > 0)
                                         <fieldset>
                                             <legend>Options</legend>
-                                            @foreach($item->getDefinition()->getOptions() as $option)
-                                                @if($option->getDefault() !== false)
+                                            @foreach($item->getDefinition()->getOptions() as $opt)
+                                                @if($opt->getDefault() !== false)
                                                     <div class="input-field">
-                                                        <input type="text" name="option_{{ $option->getName() }}" placeholder="{{ is_array($option->getDefault()) ? '' : $option->getDefault() }}">
-                                                        <label>--{{ $option->getName() . ' (' . $option->getDescription() }})</label>
+                                                        <input type="text" name="option_{{ $opt->getName() }}" placeholder="{{ is_array($opt->getDefault()) ? '' : $opt->getDefault() }}">
+                                                        <label>--{{ $opt->getName() . ' (' . $opt->getDescription() }})</label>
                                                     </div>
                                                 @else
                                                     <p>
                                                         <label for="id{{ ++$idIndex }}">
-                                                            <input type="checkbox" id="id{{ $idIndex }}" name="option_{{ $option->getName() }}">
-                                                            <span>{{ $option->getDescription() }}</span>
+                                                            <input type="checkbox" id="id{{ $idIndex }}" name="option_{{ $opt->getName() }}">
+                                                            <span>{{ $opt->getDescription() }}</span>
                                                         </label>
                                                     </p>
                                                 @endif
@@ -169,6 +169,8 @@
                         </div>
                     </li>
                 @endforeach
+            @endif
+            @if($option == 'favorites' && !empty($items))
                 <br>
                 <div class="row center-align">
                     <a
