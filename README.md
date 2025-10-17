@@ -12,21 +12,11 @@ Nice Artisan provides a secure and informative way to manage your application's 
 * **Dynamic Execution Forms:** Automatically generates intuitive form fields for all required arguments and optional options (including checkboxes for flags).
 * **Real-Time Command Preview:** As you fill out the form fields, the full `php artisan ...` command is **generated and displayed in real-time**, ready to be copied to your clipboard.
 * **Favorites System:** Mark frequently used commands as favorites for quick access and streamlined workflow.
+* **History:** Keeps the last commands
 * **Search Functionality:** Easily find any command or filter by command type using the built-in search feature.
 * **Security Focused:** Mandatory middleware configuration is required to protect the interface, especially in production environments.
 
 ---
-
-### New in V2: more power, more clarity, more learning
-
-Version 2.0 transforms Nice Artisan into an even more powerful and didactic tool:
-
-* **Integrated Command Documentation:** Now features built-in reference guides for every discoverable command, making it a valuable **learning and auditing tool**.
-* **Real-Time Command Generation:** The dynamic preview is now faster and more accurate.
-* **Favorites System:** Added the highly requested functionality to bookmark commands.
-* **Enhanced Command Search:** Improved search speed and accuracy.
-* **Simplified UI:** Options forms have been cleaned and simplified for better usability.
-
 
 ### Command Documentation ###
 
