@@ -22,7 +22,7 @@ This command is mainly used to completely clean the database of all structures c
 
 `php artisan migrate:reset`
 
-### Options Courantes
+### Casual Options
 
 | Option | Description |
 | :--- | :--- |

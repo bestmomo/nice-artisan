@@ -25,15 +25,17 @@ This command is typically used during **development or testing** when you need a
 
 `php artisan migrate:fresh`
 
-### Options Courantes
-
-| Option | Description |
-| :--- | :--- |
-| **--seed** | Instructs Laravel to run the database seeders after the migrations are complete. This is the most common way to use the command. |
-| **--seeder** | Specifies a particular seeder class to run instead of the default `Database\Seeders\DatabaseSeeder`. Only valid when using `--seed`. |
-| **--force** | Forces the command to run in a production environment. **⚠️ Use with extreme caution, as it will destroy all data.** |
-| **--path** | Specifies the path(s) to the migration files if they are not in the default `database/migrations` directory. |
-| **--database** | Specifies the database connection to use if it's not the default connection. |
+### Available Options
+* --database: The database connection to use
+* --drop-views: Drop all tables and views
+* --drop-types: Drop all tables and types (Postgres only)
+* --force: Force the operation to run when in production
+* --path: The path(s) to the migrations files to be executed (multiple values allowed)
+* --realpath: Indicate any provided migration file paths are pre-resolved absolute paths
+* --schema-path: The path to a schema dump file
+* --seed: Indicates if the seed task should be re-run
+* --seeder: The class name of the root seeder
+* --step: Force the migrations to be run so they can be rolled back individually
 
 ## Practical Examples
 

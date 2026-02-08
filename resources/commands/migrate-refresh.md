@@ -25,15 +25,13 @@ This command is commonly used during development to quickly apply changes made t
 
 php artisan migrate:refresh
 
-### Options
-
-| Option | Description |
-| :--- | :--- |
-| **--seed** | Instructs Laravel to run the database seeders after the migrations are re-applied. |
-| **--seeder** | Specifies a particular seeder class to run instead of the default `Database\Seeders\DatabaseSeeder`. Only valid when using `--seed`. |
-| **--step** | Rolls back and re-applies only the last **N** batches of migrations. |
-| **--force** | Forces the command to run in a production environment. **⚠️ Danger: This will destroy and rebuild your schema.** |
-| **--database** | Specifies the database connection to use for the operation. |
+### Available Options
+* --database: The database connection to use
+* --path: The path(s) to the migrations files to be executed (multiple values allowed)
+* --realpath: Indicate any provided migration file paths are pre-resolved absolute paths
+* --seed: Indicates if the seed task should be re-run
+* --seeder: The class name of the root seeder
+* --step: Force the migrations to be run so they can be rolled back individually
 
 ---
 

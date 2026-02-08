@@ -20,7 +20,7 @@ It does this by looking at the `migrations` table, identifying the last group (b
 
 `php artisan migrate:rollback`
 
-### Options Courantes
+### Casual Options
 
 | Option | Description |
 | :--- | :--- |
